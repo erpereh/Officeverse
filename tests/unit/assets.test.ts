@@ -20,6 +20,7 @@ describe("asset manifest", () => {
 
     for (const avatar of avatarDefinitions) {
       expect(avatar.src).toMatch(/^\/assets\/modern-tiles-free\/characters\/.+\.png$/);
+      expect(avatar.runSrc).toMatch(/^\/assets\/modern-tiles-free\/characters\/.+\.png$/);
       expect(avatar.frame).toEqual({ width: 16, height: 32 });
     }
   });

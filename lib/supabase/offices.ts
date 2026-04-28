@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import { createDefaultOfficeObjects } from "@/lib/office";
+import { createDefaultOfficeObjects, defaultOfficeHeight, defaultOfficeWidth } from "@/lib/office";
 import type { Office, OfficeObject, Profile } from "@/lib/types";
 
 export async function getProfile(
@@ -56,8 +56,8 @@ export async function ensureOfficeForUser(
     .insert({
       user_id: userId,
       name: "Mi oficina",
-      width: 30,
-      height: 20,
+      width: defaultOfficeWidth,
+      height: defaultOfficeHeight,
       base_floor: "office_floor_01",
     })
     .select("*")

@@ -20,7 +20,16 @@ Edita `.env.local`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://dguforvkdhkjiilieuay.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=tu_publishable_key
+NEXT_PUBLIC_OFFICEVERSE_DEBUG=true
 ```
+
+Con `NEXT_PUBLIC_OFFICEVERSE_DEBUG=true`, `/auth` muestra un acceso rápido de desarrollo que evita Supabase y usa estado local mock.
+
+## Assets
+
+- Fuente original: `assets/vendor/modern-tiles-free/`
+- Assets servidos por la web: `public/assets/modern-tiles-free/`
+- La licencia incluida indica uso no comercial para la versión gratuita. No publiques ni monetices el proyecto con estos assets sin sustituirlos o comprar una licencia compatible.
 
 ## Supabase
 

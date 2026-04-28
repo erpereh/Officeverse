@@ -1,70 +1,47 @@
-import Image from "next/image";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { selectAvatarAction } from "@/app/actions";
-import { avatarDefinitions } from "@/lib/assets";
+import { AvatarCarousel } from "@/components/avatar-carousel";
+import { isDebugEnabled } from "@/lib/debug-office";
 import { getProfile } from "@/lib/supabase/offices";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AvatarPage() {
+  const cookieStore = await cookies();
+  const isDebug = isDebugEnabled() && cookieStore.get("officeverse_debug")?.value === "1";
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!user && !isDebug) {
     redirect("/auth");
   }
 
-  const profile = await getProfile(supabase, user.id);
+  if (user && !isDebug) {
+    const profile = await getProfile(supabase, user.id);
 
-  if (profile?.avatar_id) {
-    redirect("/office");
+    if (profile?.avatar_id) {
+      redirect("/office");
+    }
   }
 
   return (
-    <main className="min-h-dvh px-6 py-10">
-      <section className="mx-auto w-full max-w-5xl">
+    <main className="min-h-dvh bg-[radial-gradient(circle_at_top_left,#ffd56d,transparent_28%),linear-gradient(135deg,#fff8df,#dfeec8)] px-6 py-10">
+      <section className="mx-auto w-full max-w-6xl">
         <div className="mb-8">
-          <p className="text-sm font-medium text-primary">Onboarding</p>
-          <h1 className="mt-2 text-balance text-4xl font-semibold">
+          <p className="text-sm font-black uppercase text-teal-700">
+            {isDebug ? "Debug onboarding" : "Onboarding"}
+          </p>
+          <h1 className="mt-2 text-balance text-5xl font-black text-stone-950">
             Elige tu personaje
           </h1>
-          <p className="mt-3 max-w-2xl text-pretty text-sm leading-6 text-muted-foreground">
-            Este avatar aparecerá dentro de tu oficina 2D.
+          <p className="mt-3 max-w-2xl text-pretty text-base leading-7 text-stone-700">
+            Usa las flechas para cambiar de agente. Tu personaje aparecera en
+            la oficina viva.
           </p>
         </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {avatarDefinitions.map((avatar) => (
-            <form
-              key={avatar.id}
-              action={selectAvatarAction}
-              className="rounded-md border bg-card p-5 shadow-sm"
-            >
-              <input type="hidden" name="avatar_id" value={avatar.id} />
-              <div className="flex aspect-square items-center justify-center rounded-md bg-secondary">
-                <Image
-                  alt={avatar.name}
-                  className="pixelated"
-                  height={96}
-                  src={avatar.src}
-                  width={384}
-                  priority
-                />
-              </div>
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <span className="font-medium">{avatar.name}</span>
-                <button
-                  className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
-                  type="submit"
-                >
-                  Elegir
-                </button>
-              </div>
-            </form>
-          ))}
-        </div>
+        <AvatarCarousel isDebug={isDebug} />
       </section>
     </main>
   );

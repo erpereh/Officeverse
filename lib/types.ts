@@ -28,6 +28,9 @@ export type AvatarDefinition = {
   id: string;
   name: string;
   src: string;
+  runSrc: string;
+  color: string;
+  role: string;
   frame: {
     width: number;
     height: number;
