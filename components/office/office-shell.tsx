@@ -75,7 +75,7 @@ export function OfficeShell({ state, userEmail, isDebug }: OfficeShellProps) {
             </div>
             <div className="flex justify-between gap-4 rounded-md border border-stone-200 bg-white px-3 py-2">
               <dt className="text-stone-600">Camara</dt>
-              <dd className="font-black">Mapa completo</dd>
+              <dd className="font-black">Seguimiento</dd>
             </div>
             <div className="flex justify-between gap-4 rounded-md border border-stone-200 bg-white px-3 py-2">
               <dt className="text-stone-600">Decoracion</dt>

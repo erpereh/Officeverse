@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from "react";
 
-import { getAssetDefinition, getAvatarDefinition } from "@/lib/assets";
+import { assetDefinitions, getAssetDefinition, getAvatarDefinition } from "@/lib/assets";
 import {
   avatarFrameRanges,
   resolveFacingDirection,
   type FacingDirection,
 } from "@/lib/office-direction";
-import { fitMapToViewport, gridToPixel, officeSpawnPoint } from "@/lib/office";
+import { gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
 
 type OfficeSceneProps = {
@@ -59,6 +59,7 @@ export function OfficeScene({ state }: OfficeSceneProps) {
         private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
         private keys?: Record<string, Phaser.Input.Keyboard.Key>;
         private solidRects: Phaser.Geom.Rectangle[] = [];
+        private hudText?: Phaser.GameObjects.Text;
         private lastDirection: FacingDirection = "down";
 
         constructor() {
@@ -82,10 +83,13 @@ export function OfficeScene({ state }: OfficeSceneProps) {
 
         create() {
           this.cameras.main.setBackgroundColor("#182432");
+          this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
+          this.registerInteriorFrames();
           this.renderRoom();
           this.renderObjects();
           this.createPlayer();
           this.createInput();
+          this.createSceneHud();
           this.resizeViewport(this.scale.width, this.scale.height);
         }
 
@@ -119,7 +123,27 @@ export function OfficeScene({ state }: OfficeSceneProps) {
           }
 
           this.player.setDepth(this.player.y + 20);
+          this.updateSceneHud();
           this.player.play(`avatar-run-${this.lastDirection}`, true);
+        }
+
+        private registerInteriorFrames() {
+          const texture = this.textures.get("interiors");
+
+          for (const asset of assetDefinitions) {
+            if (asset.src.includes("/interiors/Interiors_free_16x16.png") && asset.frame) {
+              if (!texture.has(asset.key)) {
+                texture.add(
+                  asset.key,
+                  0,
+                  asset.frame.x,
+                  asset.frame.y,
+                  asset.frame.w,
+                  asset.frame.h,
+                );
+              }
+            }
+          }
         }
 
         private renderRoom() {
@@ -174,14 +198,17 @@ export function OfficeScene({ state }: OfficeSceneProps) {
 
             const pixel = gridToPixel({ x: object.x, y: object.y }, tileSize, scale);
             const image = this.add
-              .image(pixel.x, pixel.y, "interiors")
+              .image(pixel.x, pixel.y, "interiors", asset.key)
               .setOrigin(0)
               .setScale(scale)
-              .setCrop(asset.frame.x, asset.frame.y, asset.frame.w, asset.frame.h)
               .setDepth(pixel.y + asset.frame.h * scale);
 
-            if (object.asset_key === "arcade_rug") {
+            if (asset.category === "floor") {
               image.setDepth(pixel.y - 4);
+            }
+
+            if (asset.category === "wall") {
+              image.setDepth(pixel.y + 2);
             }
 
             if (asset.collidable) {
@@ -191,6 +218,23 @@ export function OfficeScene({ state }: OfficeSceneProps) {
             }
 
             if (asset.interactive) {
+              this.add
+                .rectangle(
+                  pixel.x + (asset.frame.w * scale) / 2,
+                  pixel.y + (asset.frame.h * scale) / 2,
+                  asset.frame.w * scale + 12,
+                  asset.frame.h * scale + 12,
+                )
+                .setStrokeStyle(3, 0xf8c85f, 0.95)
+                .setDepth(pixel.y + asset.frame.h * scale - 1);
+
+              this.tweens.add({
+                targets: image,
+                alpha: 0.72,
+                duration: 700,
+                yoyo: true,
+                repeat: -1,
+              });
               image.setInteractive({ useHandCursor: true });
               image.on("pointerdown", () => {
                 this.add
@@ -242,6 +286,32 @@ export function OfficeScene({ state }: OfficeSceneProps) {
             .setScale(scale)
             .setDepth(start.y)
             .play("avatar-idle-down");
+          this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
+        }
+
+        private createSceneHud() {
+          this.hudText = this.add
+            .text(16, 16, "", {
+              color: "#fff8df",
+              backgroundColor: "#24313f",
+              padding: { x: 10, y: 7 },
+              fontFamily: "Arial",
+              fontSize: "14px",
+              fontStyle: "bold",
+            })
+            .setScrollFactor(0)
+            .setDepth(10000);
+          this.updateSceneHud();
+        }
+
+        private updateSceneHud() {
+          if (!this.hudText || !this.player) {
+            return;
+          }
+
+          const gridX = Math.round(this.player.x / (tileSize * scale));
+          const gridY = Math.round(this.player.y / (tileSize * scale));
+          this.hudText.setText(`WASD | Camara follow | ${gridX},${gridY}`);
         }
 
         private createInput() {
@@ -259,10 +329,9 @@ export function OfficeScene({ state }: OfficeSceneProps) {
         }
 
         resizeViewport(width: number, height: number) {
-          const fit = fitMapToViewport({ width, height }, { width: worldWidth, height: worldHeight });
           this.cameras.main.setSize(width, height);
-          this.cameras.main.setZoom(fit.zoom);
-          this.cameras.main.setScroll(-fit.offsetX / fit.zoom, -fit.offsetY / fit.zoom);
+          this.cameras.main.setZoom(1);
+          this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
         }
       }
 

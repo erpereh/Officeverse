@@ -10,8 +10,8 @@ describe("debug office", () => {
 
     expect(state.profile.avatar_id).toBe("bob");
     expect(state.office.name).toBe("Debug Arcade Office");
-    expect(state.office.width).toBe(30);
-    expect(state.office.height).toBe(18);
+    expect(state.office.width).toBe(40);
+    expect(state.office.height).toBe(24);
     expect(state.objects.map((object) => object.asset_key)).toContain("meeting_table");
     expect(state.objects.map((object) => object.asset_key)).toContain("sofa_lounge");
   });
@@ -22,7 +22,7 @@ describe("debug office", () => {
   });
 
   it("clamps movement and detects blocked cells", () => {
-    expect(clampGridPosition({ x: -4, y: 24 }, 30, 18)).toEqual({ x: 1, y: 17 });
+    expect(clampGridPosition({ x: -4, y: 28 }, 40, 24)).toEqual({ x: 1, y: 23 });
 
     expect(
       isGridBlocked({ x: 5, y: 8 }, createDebugOfficeState("adam").objects),

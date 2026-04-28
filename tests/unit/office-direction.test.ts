@@ -21,9 +21,9 @@ describe("office direction helpers", () => {
 
   it("uses six-frame directional ranges from the 24-frame character sheet", () => {
     expect(avatarFrameRanges).toEqual({
-      left: { start: 0, end: 5 },
+      right: { start: 0, end: 5 },
       up: { start: 6, end: 11 },
-      right: { start: 12, end: 17 },
+      left: { start: 12, end: 17 },
       down: { start: 18, end: 23 },
     });
   });

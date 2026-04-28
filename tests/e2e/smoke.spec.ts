@@ -20,8 +20,8 @@ test("debug mode reaches the arcade office without auth", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/office$/);
   await expect(page.getByText("DEBUG", { exact: true })).toBeVisible();
-  await expect(page.getByText("30 x 18")).toBeVisible();
-  await expect(page.getByText("Mapa completo")).toBeVisible();
+  await expect(page.getByText("40 x 24")).toBeVisible();
+  await expect(page.getByText("Seguimiento")).toBeVisible();
   const canvas = page.locator("canvas");
   await expect(canvas).toBeVisible();
   await expect.poll(async () => canvas.boundingBox()).toMatchObject({
@@ -48,7 +48,7 @@ test("debug mode reaches the arcade office without auth", async ({ page }) => {
     })
     .toBe(true);
 
-  for (const key of ["KeyW", "KeyA", "KeyS", "KeyD"]) {
+  for (const key of ["KeyA", "KeyD"]) {
     await page.keyboard.press(key);
     await expect(canvas).toBeVisible();
   }

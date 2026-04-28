@@ -6,9 +6,9 @@ export type DirectionVector = {
 };
 
 export const avatarFrameRanges: Record<FacingDirection, { start: number; end: number }> = {
-  left: { start: 0, end: 5 },
+  right: { start: 0, end: 5 },
   up: { start: 6, end: 11 },
-  right: { start: 12, end: 17 },
+  left: { start: 12, end: 17 },
   down: { start: 18, end: 23 },
 };
 
