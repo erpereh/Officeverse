@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import { createDefaultOfficeObjects, defaultOfficeHeight, defaultOfficeWidth } from "@/lib/office";
+import { defaultOfficeHeight, defaultOfficeWidth } from "@/lib/office";
 import type { Office, OfficeObject, Profile } from "@/lib/types";
 
 export async function getProfile(
@@ -44,18 +44,29 @@ export async function upsertProfileAvatar(
 export async function ensureOfficeForUser(
   supabase: SupabaseClient,
   userId: string,
+  requestedOfficeId?: string,
 ): Promise<Office> {
-  const existing = await getOffice(supabase, userId);
+  const existing = requestedOfficeId
+    ? await getOfficeById(supabase, userId, requestedOfficeId)
+    : await getLatestOffice(supabase, userId);
 
   if (existing) {
     return existing;
   }
 
+  return createOfficeForUser(supabase, userId, "Mi oficina");
+}
+
+export async function createOfficeForUser(
+  supabase: SupabaseClient,
+  userId: string,
+  name: string,
+): Promise<Office> {
   const { data, error } = await supabase
     .from("offices")
     .insert({
       user_id: userId,
-      name: "Mi oficina",
+      name,
       width: defaultOfficeWidth,
       height: defaultOfficeHeight,
       base_floor: "office_floor_01",
@@ -67,19 +78,38 @@ export async function ensureOfficeForUser(
     throw new Error(error.message);
   }
 
-  const office = data as Office;
-  await ensureDefaultObjects(supabase, office, userId);
-
-  return office;
+  return data as Office;
 }
 
-export async function getOffice(
+export async function getLatestOffice(
   supabase: SupabaseClient,
   userId: string,
 ): Promise<Office | null> {
   const { data, error } = await supabase
     .from("offices")
     .select("*")
+    .eq("user_id", userId)
+    .order("updated_at", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data as Office | null;
+}
+
+export async function getOfficeById(
+  supabase: SupabaseClient,
+  userId: string,
+  officeId: string,
+): Promise<Office | null> {
+  const { data, error } = await supabase
+    .from("offices")
+    .select("*")
+    .eq("id", officeId)
     .eq("user_id", userId)
     .maybeSingle();
 
@@ -88,6 +118,24 @@ export async function getOffice(
   }
 
   return data as Office | null;
+}
+
+export async function listOfficesForUser(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<Office[]> {
+  const { data, error } = await supabase
+    .from("offices")
+    .select("*")
+    .eq("user_id", userId)
+    .order("updated_at", { ascending: false })
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as Office[];
 }
 
 export async function getOfficeObjects(
@@ -107,24 +155,4 @@ export async function getOfficeObjects(
   }
 
   return (data ?? []) as OfficeObject[];
-}
-
-async function ensureDefaultObjects(
-  supabase: SupabaseClient,
-  office: Office,
-  userId: string,
-) {
-  const objects = await getOfficeObjects(supabase, office.id);
-
-  if (objects.length > 0) {
-    return;
-  }
-
-  const { error } = await supabase
-    .from("office_objects")
-    .insert(createDefaultOfficeObjects(office.id, userId));
-
-  if (error) {
-    throw new Error(error.message);
-  }
 }

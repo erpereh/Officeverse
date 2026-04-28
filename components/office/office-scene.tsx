@@ -12,6 +12,8 @@ import { gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
 
 type OfficeSceneProps = {
+  editorMode?: boolean;
+  onGridClick?: (point: { x: number; y: number }) => void;
   state: OfficeState;
 };
 
@@ -20,7 +22,7 @@ const scale = 3;
 const minViewportWidth = 360;
 const minViewportHeight = 360;
 
-export function OfficeScene({ state }: OfficeSceneProps) {
+export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,14 +89,16 @@ export function OfficeScene({ state }: OfficeSceneProps) {
           this.registerInteriorFrames();
           this.renderRoom();
           this.renderObjects();
+          this.renderEditorGrid();
           this.createPlayer();
           this.createInput();
           this.createSceneHud();
+          this.createEditorInput();
           this.resizeViewport(this.scale.width, this.scale.height);
         }
 
         update(_time: number, delta: number) {
-          if (!this.player || !this.cursors || !this.keys) {
+          if (!this.player || !this.cursors || !this.keys || editorMode) {
             return;
           }
 
@@ -254,6 +258,26 @@ export function OfficeScene({ state }: OfficeSceneProps) {
           this.renderAmbientHighlights();
         }
 
+        private renderEditorGrid() {
+          if (!editorMode) {
+            return;
+          }
+
+          const graphics = this.add.graphics();
+          graphics.setDepth(9990);
+          graphics.lineStyle(1, 0x14b8a6, 0.26);
+
+          for (let x = 1; x < state.office.width; x += 1) {
+            const pixelX = x * tileSize * scale;
+            graphics.lineBetween(pixelX, tileSize * scale, pixelX, worldHeight - tileSize * scale);
+          }
+
+          for (let y = 1; y < state.office.height; y += 1) {
+            const pixelY = y * tileSize * scale;
+            graphics.lineBetween(tileSize * scale, pixelY, worldWidth - tileSize * scale, pixelY);
+          }
+        }
+
         private renderAmbientHighlights() {
           const graphics = this.add.graphics();
           graphics.setDepth(1);
@@ -323,6 +347,21 @@ export function OfficeScene({ state }: OfficeSceneProps) {
           this.input.keyboard?.addCapture(["UP", "DOWN", "LEFT", "RIGHT", "W", "A", "S", "D"]);
         }
 
+        private createEditorInput() {
+          if (!editorMode) {
+            return;
+          }
+
+          this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            const x = Math.floor(pointer.worldX / (tileSize * scale));
+            const y = Math.floor(pointer.worldY / (tileSize * scale));
+
+            if (x >= 1 && y >= 1 && x < state.office.width - 1 && y < state.office.height - 1) {
+              onGridClick?.({ x, y });
+            }
+          });
+        }
+
         private canStandAt(x: number, y: number) {
           const foot = new Phaser.Geom.Rectangle(x - 10, y - 10, 20, 10);
           return !this.solidRects.some((rect) => Phaser.Geom.Intersects.RectangleToRectangle(foot, rect));
@@ -371,7 +410,7 @@ export function OfficeScene({ state }: OfficeSceneProps) {
       resizeObserver?.disconnect();
       game?.destroy(true);
     };
-  }, [state]);
+  }, [editorMode, onGridClick, state]);
 
   return (
     <div className="h-full w-full overflow-hidden border-stone-900 bg-[#24313f] md:border-r-2">

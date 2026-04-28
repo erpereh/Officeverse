@@ -82,6 +82,10 @@ export function createDefaultOfficeObjects(
   ];
 }
 
+export function createEmptyOfficeObjects(): OfficeObject[] {
+  return [];
+}
+
 export function clampGridPosition(
   point: GridPoint,
   width: number,

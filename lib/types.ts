@@ -76,3 +76,16 @@ export type OfficeState = {
   office: Office;
   objects: OfficeObject[];
 };
+
+export type OfficeLayoutPayload = {
+  officeId: string;
+  objects: Array<{
+    object_type: string;
+    asset_key: string;
+    x: number;
+    y: number;
+    rotation?: number;
+    layer?: number;
+    metadata?: Record<string, unknown>;
+  }>;
+};

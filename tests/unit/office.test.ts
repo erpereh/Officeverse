@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 
 import { getAssetDefinition } from "@/lib/assets";
+import { createObjectFromAsset, deleteObjectAt, moveObjectAt, placeObject } from "@/lib/office-editor";
 import {
+  createEmptyOfficeObjects,
   createDefaultOfficeObjects,
   defaultOfficeHeight,
   defaultOfficeWidth,
@@ -12,7 +14,11 @@ import {
 } from "@/lib/office";
 
 describe("office bootstrap", () => {
-  it("creates deterministic default objects for a new office", () => {
+  it("creates empty objects for a new office", () => {
+    expect(createEmptyOfficeObjects()).toEqual([]);
+  });
+
+  it("creates deterministic template objects on demand", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
 
     expect(objects).toHaveLength(39);
@@ -67,5 +73,18 @@ describe("office bootstrap", () => {
     expect(isGridBlocked({ x: 5, y: 8 }, objects)).toBe(true);
     expect(isGridBlocked({ x: officeSpawnPoint.x - 1, y: officeSpawnPoint.y }, objects)).toBe(false);
     expect(isGridBlocked({ x: officeSpawnPoint.x + 1, y: officeSpawnPoint.y }, objects)).toBe(false);
+  });
+
+  it("places, moves, and deletes editor objects", () => {
+    const object = createObjectFromAsset("office-1", "user-1", "desk_basic", { x: 4, y: 5 });
+    const placed = placeObject([], object);
+
+    expect(placed).toHaveLength(1);
+    expect(placed[0].asset_key).toBe("desk_basic");
+
+    const moved = moveObjectAt(placed, { x: 4, y: 5 }, { x: 8, y: 9 });
+
+    expect(moved[0]).toMatchObject({ x: 8, y: 9 });
+    expect(deleteObjectAt(moved, { x: 8, y: 9 })).toEqual([]);
   });
 });

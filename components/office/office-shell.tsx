@@ -1,21 +1,51 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { Edit3, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 
+import { OfficeEditorPanel } from "@/components/office/office-editor-panel";
 import { OfficeScene } from "@/components/office/office-scene";
+import { assetDefinitions } from "@/lib/assets";
+import {
+  createObjectFromAsset,
+  deleteObjectAt,
+  type EditorTool,
+  moveObjectAt,
+  placeObject,
+} from "@/lib/office-editor";
 import { createClient } from "@/lib/supabase/client";
-import type { OfficeState } from "@/lib/types";
+import type { Office, OfficeObject, OfficeState } from "@/lib/types";
 
 type OfficeShellProps = {
+  offices: Office[];
   state: OfficeState;
   userEmail: string;
   isDebug: boolean;
 };
 
-export function OfficeShell({ state, userEmail, isDebug }: OfficeShellProps) {
+export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellProps) {
   const router = useRouter();
+  const firstAsset = useMemo(
+    () =>
+      assetDefinitions.find((asset) => asset.frame && asset.category !== "character")?.key ??
+      "desk_basic",
+    [],
+  );
+  const [objects, setObjects] = useState<OfficeObject[]>(state.objects);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editorTool, setEditorTool] = useState<EditorTool>("place");
+  const [selectedAssetKey, setSelectedAssetKey] = useState(firstAsset);
+  const [moveFrom, setMoveFrom] = useState<{ x: number; y: number } | null>(null);
+  const [dirty, setDirty] = useState(false);
+  const sceneState = useMemo(
+    () => ({
+      ...state,
+      objects,
+    }),
+    [objects, state],
+  );
 
   async function signOut() {
     if (isDebug) {
@@ -28,6 +58,35 @@ export function OfficeShell({ state, userEmail, isDebug }: OfficeShellProps) {
     router.replace("/");
     router.refresh();
   }
+
+  const handleGridClick = useCallback(
+    (point: { x: number; y: number }) => {
+      setObjects((current) => {
+        if (editorTool === "delete") {
+          setDirty(true);
+          return deleteObjectAt(current, point);
+        }
+
+        if (editorTool === "move") {
+          if (!moveFrom) {
+            setMoveFrom(point);
+            return current;
+          }
+
+          setDirty(true);
+          setMoveFrom(null);
+          return moveObjectAt(current, moveFrom, point);
+        }
+
+        setDirty(true);
+        return placeObject(
+          current,
+          createObjectFromAsset(state.office.id, state.profile.id, selectedAssetKey, point),
+        );
+      });
+    },
+    [editorTool, moveFrom, selectedAssetKey, state.office.id, state.profile.id],
+  );
 
   return (
     <main className="flex h-dvh flex-col overflow-hidden bg-[#fff8df]">
@@ -58,7 +117,11 @@ export function OfficeShell({ state, userEmail, isDebug }: OfficeShellProps) {
 
       <div className="grid min-h-0 flex-1 overflow-auto md:h-[calc(100dvh-70px)] md:grid-cols-[minmax(0,1fr)_320px] md:overflow-hidden">
         <section className="min-h-[520px] min-w-0 overflow-hidden bg-[radial-gradient(circle_at_top_left,#ffd56d,transparent_26%),linear-gradient(135deg,#fff8df,#dfeec8)] md:min-h-0">
-          <OfficeScene state={state} />
+          <OfficeScene
+            editorMode={editorOpen}
+            state={sceneState}
+            onGridClick={handleGridClick}
+          />
         </section>
         <aside className="shrink-0 border-t-2 border-stone-900 bg-[#fffdf2] p-4 md:h-full md:overflow-auto md:border-l-2 md:border-t-0">
           <h2 className="text-sm font-black uppercase text-teal-700">HUD de oficina</h2>
@@ -85,6 +148,35 @@ export function OfficeShell({ state, userEmail, isDebug }: OfficeShellProps) {
           <p className="mt-6 rounded-md border-2 border-stone-900 bg-[#f8c85f] p-3 text-sm font-semibold leading-6 text-stone-900 shadow-[4px_4px_0_#2f2418]">
             WASD o flechas para moverte. El armario sera la entrada al editor.
           </p>
+          <button
+            className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-md border-2 border-stone-900 bg-[#f8c85f] text-sm font-black uppercase text-stone-950 shadow-[4px_4px_0_#2f2418]"
+            type="button"
+            onClick={() => setEditorOpen((open) => !open)}
+          >
+            <Edit3 className="size-4" aria-hidden="true" />
+            {editorOpen ? "Cerrar editor" : "Editar oficina"}
+          </button>
+          {editorOpen ? (
+            <OfficeEditorPanel
+              activeOffice={state.office}
+              dirty={dirty}
+              editorTool={editorTool}
+              isDebug={isDebug}
+              objects={objects}
+              offices={offices}
+              onClose={() => setEditorOpen(false)}
+              onSaved={() => {
+                setDirty(false);
+                router.refresh();
+              }}
+              onSelectAsset={setSelectedAssetKey}
+              onSetTool={(tool) => {
+                setEditorTool(tool);
+                setMoveFrom(null);
+              }}
+              selectedAssetKey={selectedAssetKey}
+            />
+          ) : null}
           {isDebug ? (
             <Link
               className="mt-4 flex h-11 items-center justify-center rounded-md border-2 border-stone-900 bg-teal-500 text-sm font-black uppercase text-stone-950 shadow-[4px_4px_0_#2f2418]"
