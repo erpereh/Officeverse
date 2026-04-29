@@ -118,9 +118,11 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
       <div className="grid min-h-0 flex-1 overflow-auto md:h-[calc(100dvh-70px)] md:grid-cols-[minmax(0,1fr)_320px] md:overflow-hidden">
         <section className="min-h-[520px] min-w-0 overflow-hidden bg-[radial-gradient(circle_at_top_left,#ffd56d,transparent_26%),linear-gradient(135deg,#fff8df,#dfeec8)] md:min-h-0">
           <OfficeScene
+            editorTool={editorTool}
             editorMode={editorOpen}
-            state={sceneState}
             onGridClick={handleGridClick}
+            selectedAssetKey={selectedAssetKey}
+            state={sceneState}
           />
         </section>
         <aside className="shrink-0 border-t-2 border-stone-900 bg-[#fffdf2] p-4 md:h-full md:overflow-auto md:border-l-2 md:border-t-0">
@@ -142,7 +144,7 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
             </div>
             <div className="flex justify-between gap-4 rounded-md border border-stone-200 bg-white px-3 py-2">
               <dt className="text-stone-600">Decoracion</dt>
-              <dd className="font-black tabular-nums">{state.objects.length}</dd>
+              <dd className="font-black tabular-nums">{objects.length}</dd>
             </div>
           </dl>
           <p className="mt-6 rounded-md border-2 border-stone-900 bg-[#f8c85f] p-3 text-sm font-semibold leading-6 text-stone-900 shadow-[4px_4px_0_#2f2418]">

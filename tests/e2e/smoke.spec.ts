@@ -64,9 +64,16 @@ test("debug mode reaches the arcade office without auth", async ({ page }) => {
 
   await page.getByRole("button", { name: /editar oficina/i }).click();
   await page.getByRole("button", { name: /mesa de trabajo/i }).click();
+  const canvasHandle = await canvas.elementHandle();
+  expect(canvasHandle).not.toBeNull();
   const box = await canvas.boundingBox();
   expect(box).not.toBeNull();
   await page.mouse.click((box?.x ?? 0) + (box?.width ?? 0) / 2, (box?.y ?? 0) + (box?.height ?? 0) / 2);
+  await expect
+    .poll(async () =>
+      page.evaluate((node) => node === document.querySelector("canvas"), canvasHandle),
+    )
+    .toBe(true);
   await page.getByRole("button", { name: "Tools", exact: true }).click();
   await page.getByRole("button", { name: /guardar cambios/i }).click();
   await expect(page.getByText(/layout sincronizado/i)).toBeVisible();

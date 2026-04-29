@@ -8,13 +8,27 @@ import {
   resolveFacingDirection,
   type FacingDirection,
 } from "@/lib/office-direction";
+import type { EditorTool } from "@/lib/office-editor";
 import { gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
 
 type OfficeSceneProps = {
   editorMode?: boolean;
+  editorTool?: EditorTool;
   onGridClick?: (point: { x: number; y: number }) => void;
+  selectedAssetKey?: string;
   state: OfficeState;
+};
+
+type EditorSceneState = {
+  enabled: boolean;
+  selectedAssetKey: string;
+  tool: EditorTool;
+};
+
+type OfficeSceneController = {
+  setEditorState: (editorState: EditorSceneState) => void;
+  setObjects: (objects: OfficeState["objects"]) => void;
 };
 
 const tileSize = 16;
@@ -22,8 +36,26 @@ const scale = 3;
 const minViewportWidth = 360;
 const minViewportHeight = 360;
 
-export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSceneProps) {
+export function OfficeScene({
+  editorMode = false,
+  editorTool = "place",
+  onGridClick,
+  selectedAssetKey = "desk_basic",
+  state,
+}: OfficeSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<OfficeSceneController | null>(null);
+  const editorStateRef = useRef<EditorSceneState>({
+    enabled: editorMode,
+    selectedAssetKey,
+    tool: editorTool,
+  });
+  const gridClickRef = useRef(onGridClick);
+  const stateRef = useRef(state);
+
+  stateRef.current = state;
+  gridClickRef.current = onGridClick;
+  editorStateRef.current = { enabled: editorMode, selectedAssetKey, tool: editorTool };
 
   useEffect(() => {
     let game: {
@@ -43,7 +75,8 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
 
       containerRef.current.innerHTML = "";
 
-      const avatar = getAvatarDefinition(state.profile.avatar_id);
+      const initialState = stateRef.current;
+      const avatar = getAvatarDefinition(initialState.profile.avatar_id);
       const getContainerSize = () => {
         const rect = containerRef.current?.getBoundingClientRect();
 
@@ -53,14 +86,18 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
         };
       };
       const initialSize = getContainerSize();
-      const worldWidth = state.office.width * tileSize * scale;
-      const worldHeight = state.office.height * tileSize * scale;
+      const worldWidth = initialState.office.width * tileSize * scale;
+      const worldHeight = initialState.office.height * tileSize * scale;
 
       class OfficePhaserScene extends Phaser.Scene {
+        private editorGrid?: Phaser.GameObjects.Graphics;
+        private ghost?: Phaser.GameObjects.Rectangle;
+        private objectGameObjects: Phaser.GameObjects.GameObject[] = [];
+        private objectSolidRects: Phaser.Geom.Rectangle[] = [];
         private player?: Phaser.GameObjects.Sprite;
         private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
         private keys?: Record<string, Phaser.Input.Keyboard.Key>;
-        private solidRects: Phaser.Geom.Rectangle[] = [];
+        private wallSolidRects: Phaser.Geom.Rectangle[] = [];
         private hudText?: Phaser.GameObjects.Text;
         private lastDirection: FacingDirection = "down";
 
@@ -94,11 +131,16 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
           this.createInput();
           this.createSceneHud();
           this.createEditorInput();
+          controllerRef.current = {
+            setEditorState: (nextEditorState) => this.setEditorState(nextEditorState),
+            setObjects: (objects) => this.setObjects(objects),
+          };
+          this.setEditorState(editorStateRef.current);
           this.resizeViewport(this.scale.width, this.scale.height);
         }
 
         update(_time: number, delta: number) {
-          if (!this.player || !this.cursors || !this.keys || editorMode) {
+          if (!this.player || !this.cursors || !this.keys || editorStateRef.current.enabled) {
             return;
           }
 
@@ -156,8 +198,10 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
           graphics.fillStyle(0x203142, 1);
           graphics.fillRect(0, 0, worldWidth, worldHeight);
 
-          for (let y = 1; y < state.office.height - 1; y += 1) {
-            for (let x = 1; x < state.office.width - 1; x += 1) {
+          const office = stateRef.current.office;
+
+          for (let y = 1; y < office.height - 1; y += 1) {
+            for (let x = 1; x < office.width - 1; x += 1) {
               const pixel = gridToPixel({ x, y }, tileSize, scale);
               const checker = (x + y) % 2 === 0;
               graphics.fillStyle(checker ? 0xf7e7b8 : 0xefd99b, 1);
@@ -184,7 +228,7 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
             fontStyle: "bold",
           });
 
-          this.solidRects.push(
+          this.wallSolidRects.push(
             new Phaser.Geom.Rectangle(0, 0, worldWidth, tileSize * scale),
             new Phaser.Geom.Rectangle(0, 0, tileSize * scale, worldHeight),
             new Phaser.Geom.Rectangle(0, worldHeight - tileSize * scale, worldWidth, tileSize * scale),
@@ -193,7 +237,13 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
         }
 
         private renderObjects() {
-          for (const object of state.objects) {
+          for (const gameObject of this.objectGameObjects) {
+            gameObject.destroy();
+          }
+          this.objectGameObjects = [];
+          this.objectSolidRects = [];
+
+          for (const object of stateRef.current.objects) {
             const asset = getAssetDefinition(object.asset_key);
 
             if (!asset?.frame) {
@@ -206,6 +256,7 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
               .setOrigin(0)
               .setScale(scale)
               .setDepth(pixel.y + asset.frame.h * scale);
+            this.objectGameObjects.push(image);
 
             if (asset.category === "floor") {
               image.setDepth(pixel.y - 4);
@@ -218,11 +269,11 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
             if (asset.collidable) {
               const width = (asset.gridSize?.w ?? 1) * tileSize * scale;
               const height = (asset.gridSize?.h ?? 1) * tileSize * scale;
-              this.solidRects.push(new Phaser.Geom.Rectangle(pixel.x, pixel.y, width, height));
+              this.objectSolidRects.push(new Phaser.Geom.Rectangle(pixel.x, pixel.y, width, height));
             }
 
             if (asset.interactive) {
-              this.add
+              const highlight = this.add
                 .rectangle(
                   pixel.x + (asset.frame.w * scale) / 2,
                   pixel.y + (asset.frame.h * scale) / 2,
@@ -231,6 +282,7 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
                 )
                 .setStrokeStyle(3, 0xf8c85f, 0.95)
                 .setDepth(pixel.y + asset.frame.h * scale - 1);
+              this.objectGameObjects.push(highlight);
 
               this.tweens.add({
                 targets: image,
@@ -259,23 +311,22 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
         }
 
         private renderEditorGrid() {
-          if (!editorMode) {
-            return;
-          }
-
+          const office = stateRef.current.office;
           const graphics = this.add.graphics();
           graphics.setDepth(9990);
           graphics.lineStyle(1, 0x14b8a6, 0.26);
+          graphics.setVisible(false);
 
-          for (let x = 1; x < state.office.width; x += 1) {
+          for (let x = 1; x < office.width; x += 1) {
             const pixelX = x * tileSize * scale;
             graphics.lineBetween(pixelX, tileSize * scale, pixelX, worldHeight - tileSize * scale);
           }
 
-          for (let y = 1; y < state.office.height; y += 1) {
+          for (let y = 1; y < office.height; y += 1) {
             const pixelY = y * tileSize * scale;
             graphics.lineBetween(tileSize * scale, pixelY, worldWidth - tileSize * scale, pixelY);
           }
+          this.editorGrid = graphics;
         }
 
         private renderAmbientHighlights() {
@@ -285,6 +336,7 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
           graphics.fillRoundedRect(18 * tileSize * scale, 10 * tileSize * scale, 150, 36, 8);
           graphics.fillStyle(0xf8c85f, 1);
           graphics.fillRoundedRect(18 * tileSize * scale + 12, 10 * tileSize * scale + 9, 126, 18, 5);
+          this.objectGameObjects.push(graphics);
         }
 
         private createPlayer() {
@@ -348,23 +400,97 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
         }
 
         private createEditorInput() {
-          if (!editorMode) {
-            return;
-          }
+          this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
+            if (!editorStateRef.current.enabled) {
+              return;
+            }
+
+            this.updateGhost(pointer.worldX, pointer.worldY);
+          });
 
           this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (!editorStateRef.current.enabled) {
+              return;
+            }
+
             const x = Math.floor(pointer.worldX / (tileSize * scale));
             const y = Math.floor(pointer.worldY / (tileSize * scale));
+            const office = stateRef.current.office;
 
-            if (x >= 1 && y >= 1 && x < state.office.width - 1 && y < state.office.height - 1) {
-              onGridClick?.({ x, y });
+            if (x >= 1 && y >= 1 && x < office.width - 1 && y < office.height - 1) {
+              gridClickRef.current?.({ x, y });
             }
           });
         }
 
+        private setEditorState(nextEditorState: EditorSceneState) {
+          editorStateRef.current = nextEditorState;
+          this.editorGrid?.setVisible(nextEditorState.enabled);
+
+          if (nextEditorState.enabled) {
+            this.cameras.main.stopFollow();
+            this.ensureGhost();
+            this.ghost?.setVisible(false);
+          } else {
+            this.ghost?.setVisible(false);
+            if (this.player) {
+              this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
+            }
+          }
+          this.updateSceneHud();
+        }
+
+        private setObjects(objects: OfficeState["objects"]) {
+          stateRef.current = {
+            ...stateRef.current,
+            objects,
+          };
+          this.renderObjects();
+        }
+
+        private ensureGhost() {
+          if (this.ghost) {
+            return;
+          }
+
+          this.ghost = this.add
+            .rectangle(0, 0, tileSize * scale, tileSize * scale)
+            .setOrigin(0)
+            .setStrokeStyle(2, 0x14b8a6, 0.95)
+            .setFillStyle(0x14b8a6, 0.18)
+            .setDepth(9995)
+            .setVisible(false);
+        }
+
+        private updateGhost(worldX: number, worldY: number) {
+          this.ensureGhost();
+          const asset = getAssetDefinition(editorStateRef.current.selectedAssetKey);
+          const width = (asset?.gridSize?.w ?? 1) * tileSize * scale;
+          const height = (asset?.gridSize?.h ?? 1) * tileSize * scale;
+          const x = Math.floor(worldX / (tileSize * scale));
+          const y = Math.floor(worldY / (tileSize * scale));
+          const pixel = gridToPixel({ x, y }, tileSize, scale);
+          const valid = this.isEditableCell(x, y, asset?.gridSize?.w ?? 1, asset?.gridSize?.h ?? 1);
+
+          this.ghost
+            ?.setPosition(pixel.x, pixel.y)
+            .setSize(width, height)
+            .setFillStyle(valid ? 0x14b8a6 : 0xef4444, 0.18)
+            .setStrokeStyle(2, valid ? 0x14b8a6 : 0xef4444, 0.95)
+            .setVisible(true);
+        }
+
+        private isEditableCell(x: number, y: number, width: number, height: number) {
+          const office = stateRef.current.office;
+
+          return x >= 1 && y >= 1 && x + width < office.width && y + height < office.height;
+        }
+
         private canStandAt(x: number, y: number) {
           const foot = new Phaser.Geom.Rectangle(x - 10, y - 10, 20, 10);
-          return !this.solidRects.some((rect) => Phaser.Geom.Intersects.RectangleToRectangle(foot, rect));
+          return ![...this.wallSolidRects, ...this.objectSolidRects].some((rect) =>
+            Phaser.Geom.Intersects.RectangleToRectangle(foot, rect),
+          );
         }
 
         resizeViewport(width: number, height: number) {
@@ -408,9 +534,18 @@ export function OfficeScene({ editorMode = false, onGridClick, state }: OfficeSc
     return () => {
       cancelled = true;
       resizeObserver?.disconnect();
+      controllerRef.current = null;
       game?.destroy(true);
     };
-  }, [editorMode, onGridClick, state]);
+  }, [state.office.height, state.office.id, state.office.width, state.profile.avatar_id]);
+
+  useEffect(() => {
+    controllerRef.current?.setEditorState({ enabled: editorMode, selectedAssetKey, tool: editorTool });
+  }, [editorMode, editorTool, selectedAssetKey]);
+
+  useEffect(() => {
+    controllerRef.current?.setObjects(state.objects);
+  }, [state.objects]);
 
   return (
     <div className="h-full w-full overflow-hidden border-stone-900 bg-[#24313f] md:border-r-2">

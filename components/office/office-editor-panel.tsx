@@ -12,7 +12,7 @@ import {
   renameOfficeAction,
   saveOfficeLayoutAction,
 } from "@/app/actions";
-import { assetDefinitions } from "@/lib/assets";
+import { assetDefinitions, getAssetDefinition } from "@/lib/assets";
 import type { EditorTool } from "@/lib/office-editor";
 import type { Office, OfficeLayoutPayload, OfficeObject } from "@/lib/types";
 
@@ -33,6 +33,11 @@ type OfficeEditorPanelProps = {
 const placeableAssets = assetDefinitions.filter(
   (asset) => asset.frame && asset.category !== "character",
 );
+
+const sourceSizes: Record<string, { height: number; width: number }> = {
+  "/assets/modern-tiles-free/interiors/Interiors_free_16x16.png": { width: 256, height: 1424 },
+  "/assets/modern-tiles-free/interiors/Room_Builder_free_16x16.png": { width: 272, height: 368 },
+};
 
 export function OfficeEditorPanel({
   activeOffice,
@@ -55,6 +60,7 @@ export function OfficeEditorPanel({
       placeableAssets.filter((asset) => category === "all" || asset.category === category),
     [category],
   );
+  const selectedAsset = getAssetDefinition(selectedAssetKey);
 
   function save() {
     const payload: OfficeLayoutPayload = {
@@ -171,6 +177,23 @@ export function OfficeEditorPanel({
 
       {tab === "assets" ? (
         <div className="mt-3">
+          {selectedAsset ? (
+            <div className="mb-3 rounded-md border-2 border-[#f8c85f] bg-[#fff8df] p-2 text-stone-950">
+              <p className="text-[11px] font-black uppercase text-teal-700">Seleccionado</p>
+              <div className="mt-2 flex items-center gap-3">
+                <div className="flex size-16 shrink-0 items-center justify-center rounded-md border-2 border-stone-900 bg-[#fff8df]">
+                  <AssetPreview asset={selectedAsset} scale={2} />
+                </div>
+                <div className="min-w-0">
+                  <p className="break-words text-sm font-black leading-4">{selectedAsset.name}</p>
+                  <p className="mt-1 text-xs font-bold text-stone-600">
+                    {selectedAsset.gridSize?.w ?? 1}x{selectedAsset.gridSize?.h ?? 1}
+                    {selectedAsset.collidable ? " - bloquea paso" : " - decorativo"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : null}
           <select
             aria-label="Filtrar objetos"
             className="h-10 w-full rounded-md border-2 border-stone-950 bg-[#fff8df] px-2 text-sm font-bold text-stone-950"
@@ -187,7 +210,7 @@ export function OfficeEditorPanel({
             {filteredAssets.map((asset) => (
               <button
                 key={asset.key}
-                className={`rounded-md border-2 p-2 text-left text-xs ${
+                className={`min-h-24 rounded-md border-2 p-2 text-left text-xs ${
                   selectedAssetKey === asset.key
                     ? "border-[#f8c85f] bg-teal-500 text-stone-950"
                     : "border-[#fff8df]/25 bg-[#fff8df]/10"
@@ -198,7 +221,10 @@ export function OfficeEditorPanel({
                   onSetTool("place");
                 }}
               >
-                <span className="block font-black">{asset.name}</span>
+                <span className="mb-2 flex h-10 items-center justify-center rounded border border-current/20 bg-[#fff8df]/90">
+                  <AssetPreview asset={asset} scale={1} />
+                </span>
+                <span className="block break-words font-black leading-4">{asset.name}</span>
                 <span className="mt-1 block text-[11px] opacity-80">
                   {asset.gridSize?.w ?? 1}x{asset.gridSize?.h ?? 1}
                   {asset.collidable ? " bloquea" : ""}
@@ -271,6 +297,37 @@ export function OfficeEditorPanel({
         {dirty ? "Cambios pendientes" : "Layout sincronizado"} · Click en la grid para editar.
       </p>
     </div>
+  );
+}
+
+function AssetPreview({
+  asset,
+  scale,
+}: {
+  asset: (typeof assetDefinitions)[number];
+  scale: number;
+}) {
+  if (!asset.frame) {
+    return null;
+  }
+
+  const sourceSize = sourceSizes[asset.src];
+
+  return (
+    <span
+      aria-hidden="true"
+      className="block shrink-0 [image-rendering:pixelated]"
+      style={{
+        backgroundImage: `url(${asset.src})`,
+        backgroundPosition: `${-asset.frame.x * scale}px ${-asset.frame.y * scale}px`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: sourceSize
+          ? `${sourceSize.width * scale}px ${sourceSize.height * scale}px`
+          : undefined,
+        height: asset.frame.h * scale,
+        width: asset.frame.w * scale,
+      }}
+    />
   );
 }
 

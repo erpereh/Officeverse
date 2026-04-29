@@ -72,8 +72,8 @@ export const assetDefinitions: AssetDefinition[] = [
     name: "Mesa con terminal",
     category: "furniture",
     src: `${interiorsPath}/Interiors_free_16x16.png`,
-    frame: { x: 0, y: 848, w: 48, h: 32 },
-    gridSize: { w: 3, h: 2 },
+    frame: { x: 0, y: 592, w: 80, h: 32 },
+    gridSize: { w: 5, h: 2 },
     collidable: true,
   },
   {
@@ -81,8 +81,8 @@ export const assetDefinitions: AssetDefinition[] = [
     name: "Terminal de automatizacion",
     category: "furniture",
     src: `${interiorsPath}/Interiors_free_16x16.png`,
-    frame: { x: 64, y: 880, w: 32, h: 32 },
-    gridSize: { w: 2, h: 2 },
+    frame: { x: 160, y: 640, w: 48, h: 32 },
+    gridSize: { w: 3, h: 2 },
     collidable: true,
   },
   {
@@ -99,8 +99,8 @@ export const assetDefinitions: AssetDefinition[] = [
     name: "Archivador",
     category: "furniture",
     src: `${interiorsPath}/Interiors_free_16x16.png`,
-    frame: { x: 160, y: 544, w: 32, h: 32 },
-    gridSize: { w: 2, h: 2 },
+    frame: { x: 144, y: 820, w: 48, h: 39 },
+    gridSize: { w: 3, h: 3 },
     collidable: true,
   },
   {
@@ -220,8 +220,8 @@ export const assetDefinitions: AssetDefinition[] = [
     name: "Planta",
     category: "furniture",
     src: `${interiorsPath}/Interiors_free_16x16.png`,
-    frame: { x: 192, y: 944, w: 16, h: 32 },
-    gridSize: { w: 1, h: 2 },
+    frame: { x: 195, y: 952, w: 27, h: 36 },
+    gridSize: { w: 2, h: 3 },
     collidable: true,
   },
   {

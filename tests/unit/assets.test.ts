@@ -70,4 +70,11 @@ describe("asset manifest", () => {
       expect(visiblePixels, asset.key).toBeGreaterThan(0);
     }
   });
+
+  it("does not use the broken checker-cabinet crop for the automation terminal", () => {
+    const terminal = assetDefinitions.find((asset) => asset.key === "terminal_workstation");
+
+    expect(terminal?.frame).toBeDefined();
+    expect(terminal?.frame).not.toEqual({ x: 64, y: 880, w: 32, h: 32 });
+  });
 });
