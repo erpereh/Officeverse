@@ -1,10 +1,16 @@
 import type { AssetDefinition, AvatarDefinition } from "@/lib/types";
+import officeBuildingManifest from "@/public/assets/officeverse/building/office-building.manifest.json";
 import officeSpritesManifest from "@/public/assets/officeverse/interiors/office-sprites.manifest.json";
 
 const characterPath = "/assets/modern-tiles-free/characters";
 const interiorsPath = "/assets/modern-tiles-free/interiors";
 
 const officeSpriteAssets = officeSpritesManifest.assets.map((asset) => ({
+  ...asset,
+  category: asset.category as AssetDefinition["category"],
+})) satisfies AssetDefinition[];
+
+const officeBuildingAssets = officeBuildingManifest.assets.map((asset) => ({
   ...asset,
   category: asset.category as AssetDefinition["category"],
 })) satisfies AssetDefinition[];
@@ -64,6 +70,7 @@ export const assetDefinitions: AssetDefinition[] = [
     frame: { x: 0, y: 0, w: 16, h: 16 },
     gridSize: { w: 1, h: 1 },
   },
+  ...officeBuildingAssets,
   ...officeSpriteAssets,
 ];
 

@@ -38,6 +38,7 @@ const placeableAssets = assetDefinitions.filter(
 const sourceSizes: Record<string, { height: number; width: number }> = {
   "/assets/modern-tiles-free/interiors/Interiors_free_16x16.png": { width: 256, height: 1424 },
   "/assets/modern-tiles-free/interiors/Room_Builder_free_16x16.png": { width: 272, height: 368 },
+  "/assets/officeverse/building/office-building.png": { width: 1536, height: 1024 },
   "/assets/officeverse/interiors/office-sprites.png": { width: 1536, height: 1024 },
 };
 

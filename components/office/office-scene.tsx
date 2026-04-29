@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import {
   fitAssetFrameToGrid,
   getAssetFootprintPixels,
-  isOfficeverseInteriorAsset,
+  isOfficeverseGeneratedAsset,
 } from "@/lib/asset-rendering";
 import { assetDefinitions, getAssetDefinition, getAvatarDefinition } from "@/lib/assets";
 import {
@@ -14,6 +14,7 @@ import {
   type FacingDirection,
 } from "@/lib/office-direction";
 import type { EditorTool } from "@/lib/office-editor";
+import { createRoomBasePlacements } from "@/lib/office-room";
 import { gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
 
@@ -42,6 +43,10 @@ const minViewportWidth = 360;
 const minViewportHeight = 360;
 
 function textureKeyForAssetSource(src: string) {
+  if (src.includes("/officeverse/building/office-building.png")) {
+    return "office-building";
+  }
+
   if (src.includes("/officeverse/interiors/office-sprites.png")) {
     return "office-sprites";
   }
@@ -140,6 +145,7 @@ export function OfficeScene({
             "/assets/modern-tiles-free/interiors/Room_Builder_free_16x16.png",
           );
           this.load.image("office-sprites", "/assets/officeverse/interiors/office-sprites.png");
+          this.load.image("office-building", "/assets/officeverse/building/office-building.png");
         }
 
         create() {
@@ -217,38 +223,14 @@ export function OfficeScene({
         private renderRoom() {
           const graphics = this.add.graphics();
 
-          graphics.fillStyle(0x203142, 1);
+          graphics.fillStyle(0x162233, 1);
           graphics.fillRect(0, 0, worldWidth, worldHeight);
 
           const office = stateRef.current.office;
 
-          for (let y = 1; y < office.height - 1; y += 1) {
-            for (let x = 1; x < office.width - 1; x += 1) {
-              const pixel = gridToPixel({ x, y }, tileSize, scale);
-              const checker = (x + y) % 2 === 0;
-              graphics.fillStyle(checker ? 0xf7e7b8 : 0xefd99b, 1);
-              graphics.fillRect(pixel.x, pixel.y, tileSize * scale, tileSize * scale);
-              graphics.lineStyle(1, 0xd3bd7b, 0.45);
-              graphics.strokeRect(pixel.x, pixel.y, tileSize * scale, tileSize * scale);
-            }
+          for (const placement of createRoomBasePlacements(office.width, office.height)) {
+            this.addStaticAsset(placement.assetKey, placement.x, placement.y, placement.depth);
           }
-
-          graphics.fillStyle(0x5f7c74, 1);
-          graphics.fillRect(0, 0, worldWidth, tileSize * scale);
-          graphics.fillRect(0, 0, tileSize * scale, worldHeight);
-          graphics.fillRect(0, worldHeight - tileSize * scale, worldWidth, tileSize * scale);
-          graphics.fillRect(worldWidth - tileSize * scale, 0, tileSize * scale, worldHeight);
-
-          graphics.fillStyle(0xf8c85f, 1);
-          graphics.fillRect(tileSize * scale * 2, tileSize * scale * 2, worldWidth - tileSize * scale * 4, 8);
-          graphics.fillStyle(0x24313f, 1);
-          graphics.fillRoundedRect(tileSize * scale * 3, tileSize * scale * 3, 240, 34, 4);
-          this.add.text(tileSize * scale * 3 + 12, tileSize * scale * 3 + 8, "OFFICEVERSE OPS", {
-            color: "#fff8df",
-            fontFamily: "Arial",
-            fontSize: "16px",
-            fontStyle: "bold",
-          });
 
           this.wallSolidRects.push(
             new Phaser.Geom.Rectangle(0, 0, worldWidth, tileSize * scale),
@@ -256,6 +238,22 @@ export function OfficeScene({
             new Phaser.Geom.Rectangle(0, worldHeight - tileSize * scale, worldWidth, tileSize * scale),
             new Phaser.Geom.Rectangle(worldWidth - tileSize * scale, 0, tileSize * scale, worldHeight),
           );
+        }
+
+        private addStaticAsset(assetKey: string, gridX: number, gridY: number, depth: number) {
+          const asset = getAssetDefinition(assetKey);
+
+          if (!asset?.frame) {
+            return;
+          }
+
+          const pixel = gridToPixel({ x: gridX, y: gridY }, tileSize, scale);
+          const footprint = getAssetFootprintPixels(asset, tileSize, scale);
+          this.add
+            .image(pixel.x, pixel.y, textureKeyForAssetSource(asset.src), asset.key)
+            .setOrigin(0)
+            .setDisplaySize(footprint.width, footprint.height)
+            .setDepth(depth);
         }
 
         private renderObjects() {
@@ -277,7 +275,7 @@ export function OfficeScene({
             const fit = fitAssetFrameToGrid(asset, tileSize, scale);
             const image = this.add.image(pixel.x, pixel.y, textureKeyForAssetSource(asset.src), asset.key);
 
-            if (isOfficeverseInteriorAsset(asset)) {
+            if (isOfficeverseGeneratedAsset(asset)) {
               if (asset.category === "floor") {
                 image
                   .setOrigin(0)
@@ -348,7 +346,6 @@ export function OfficeScene({
             }
           }
 
-          this.renderAmbientHighlights();
         }
 
         private renderEditorGrid() {
@@ -368,16 +365,6 @@ export function OfficeScene({
             graphics.lineBetween(tileSize * scale, pixelY, worldWidth - tileSize * scale, pixelY);
           }
           this.editorGrid = graphics;
-        }
-
-        private renderAmbientHighlights() {
-          const graphics = this.add.graphics();
-          graphics.setDepth(1);
-          graphics.fillStyle(0x2f8c84, 1);
-          graphics.fillRoundedRect(18 * tileSize * scale, 10 * tileSize * scale, 150, 36, 8);
-          graphics.fillStyle(0xf8c85f, 1);
-          graphics.fillRoundedRect(18 * tileSize * scale + 12, 10 * tileSize * scale + 9, 126, 18, 5);
-          this.objectGameObjects.push(graphics);
         }
 
         private createPlayer() {

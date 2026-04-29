@@ -77,4 +77,16 @@ describe("asset manifest", () => {
     expect(terminal?.src).toBe("/assets/officeverse/interiors/office-sprites.png");
     expect(getAssetDefinition("terminal_workstation")).toBeUndefined();
   });
+
+  it("loads Officeverse building structure sprites", () => {
+    expect(getAssetDefinition("building_floor_blue_tile")).toMatchObject({
+      category: "floor",
+      gridSize: { w: 1, h: 1 },
+      src: "/assets/officeverse/building/office-building.png",
+    });
+    expect(getAssetDefinition("building_door_double_glass")).toMatchObject({
+      category: "interactive",
+      gridSize: { w: 4, h: 5 },
+    });
+  });
 });

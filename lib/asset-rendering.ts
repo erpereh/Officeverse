@@ -1,9 +1,14 @@
 import type { AssetDefinition } from "@/lib/types";
 
 export const officeSpritesPath = "/assets/officeverse/interiors/office-sprites.png";
+export const officeBuildingPath = "/assets/officeverse/building/office-building.png";
 
 export function isOfficeverseInteriorAsset(asset: Pick<AssetDefinition, "src">) {
   return asset.src === officeSpritesPath;
+}
+
+export function isOfficeverseGeneratedAsset(asset: Pick<AssetDefinition, "src">) {
+  return asset.src === officeSpritesPath || asset.src === officeBuildingPath;
 }
 
 export function getAssetGridSize(asset: Pick<AssetDefinition, "gridSize">) {
