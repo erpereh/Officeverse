@@ -113,8 +113,9 @@ export function findTopObjectIndexAt(objects: OfficeObject[], point: GridPoint) 
   let matchDepth = Number.NEGATIVE_INFINITY;
 
   objects.forEach((object, index) => {
-    const width = Number(object.metadata?.grid_w ?? 1);
-    const height = Number(object.metadata?.grid_h ?? 1);
+    const asset = getAssetDefinition(object.asset_key);
+    const width = asset?.gridSize?.w ?? Number(object.metadata?.grid_w ?? 1);
+    const height = asset?.gridSize?.h ?? Number(object.metadata?.grid_h ?? 1);
     const contains =
       point.x >= object.x &&
       point.x < object.x + width &&

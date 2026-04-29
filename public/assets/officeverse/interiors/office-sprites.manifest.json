@@ -1,0 +1,1250 @@
+{
+  "id": "office-sprites",
+  "image": "/assets/officeverse/interiors/office-sprites.png",
+  "source": "/assets/officeverse/interiors/source-office-sprites.png",
+  "sourceSize": {
+    "width": 1536,
+    "height": 1024
+  },
+  "tileSize": 16,
+  "generatedFrom": "user-provided green office sprite sheet",
+  "assets": [
+    {
+      "key": "office_automation_command_center",
+      "name": "Centro de automatizacion",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 814,
+        "y": 15,
+        "w": 189,
+        "h": 147
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 3
+      },
+      "collidable": true,
+      "interactive": true
+    },
+    {
+      "key": "office_desk_monitor",
+      "name": "Escritorio con monitor",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 218,
+        "y": 17,
+        "w": 153,
+        "h": 133
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_desk_chair_corner",
+      "name": "Puesto ejecutivo",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 593,
+        "y": 17,
+        "w": 187,
+        "h": 148
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_corner_desk",
+      "name": "Escritorio en L",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1043,
+        "y": 17,
+        "w": 173,
+        "h": 145
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_desk_dual_terminal",
+      "name": "Escritorio doble pantalla",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 395,
+        "y": 22,
+        "w": 174,
+        "h": 129
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_lamp_desk",
+      "name": "Mesa con lampara",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1270,
+        "y": 24,
+        "w": 144,
+        "h": 138
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_desk_basic",
+      "name": "Mesa de trabajo",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 43,
+        "y": 40,
+        "w": 150,
+        "h": 111
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_multi_monitor_station",
+      "name": "Puesto multi monitor",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 165,
+        "y": 188,
+        "w": 179,
+        "h": 125
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_printer_console",
+      "name": "Impresora industrial",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 386,
+        "y": 188,
+        "w": 148,
+        "h": 124
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_server_rack",
+      "name": "Rack servidor",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 584,
+        "y": 190,
+        "w": 73,
+        "h": 116
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_retro_terminal",
+      "name": "Terminal retro",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 50,
+        "y": 192,
+        "w": 78,
+        "h": 111
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_compact_terminal",
+      "name": "Cajero de datos",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 713,
+        "y": 200,
+        "w": 65,
+        "h": 103
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_crt_monitor",
+      "name": "Monitor CRT",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1277,
+        "y": 212,
+        "w": 72,
+        "h": 75
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_flat_monitor_large",
+      "name": "Monitor grande",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 972,
+        "y": 213,
+        "w": 85,
+        "h": 80
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_tower_black",
+      "name": "Torre PC",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1381,
+        "y": 213,
+        "w": 36,
+        "h": 73
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_flat_monitor",
+      "name": "Monitor plano",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 836,
+        "y": 214,
+        "w": 95,
+        "h": 80
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_laptop_open",
+      "name": "Portatil abierto",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1090,
+        "y": 218,
+        "w": 72,
+        "h": 75
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_laptop_small",
+      "name": "Portatil pequeno",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1189,
+        "y": 228,
+        "w": 63,
+        "h": 58
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_locker_tall",
+      "name": "Taquilla alta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1370,
+        "y": 321,
+        "w": 47,
+        "h": 109
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_file_cabinet_gray",
+      "name": "Archivador gris",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1253,
+        "y": 325,
+        "w": 64,
+        "h": 110
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_chair_black",
+      "name": "Silla oficina negra",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 46,
+        "y": 332,
+        "w": 61,
+        "h": 90
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_chair_teal",
+      "name": "Silla oficina teal",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 171,
+        "y": 336,
+        "w": 57,
+        "h": 93
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_chair_amber",
+      "name": "Silla oficina ambar",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 291,
+        "y": 336,
+        "w": 59,
+        "h": 93
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_chair_blue",
+      "name": "Silla oficina azul",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 413,
+        "y": 342,
+        "w": 50,
+        "h": 78
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_waiting_chair_teal",
+      "name": "Silla visitante teal",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 531,
+        "y": 342,
+        "w": 59,
+        "h": 85
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_sofa_teal",
+      "name": "Sofa teal",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1011,
+        "y": 344,
+        "w": 168,
+        "h": 86
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_armchair_beige",
+      "name": "Sillon beige",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 874,
+        "y": 348,
+        "w": 74,
+        "h": 80
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_stool_teal",
+      "name": "Taburete teal",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 650,
+        "y": 354,
+        "w": 49,
+        "h": 65
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_stool_wood",
+      "name": "Taburete madera",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 756,
+        "y": 356,
+        "w": 46,
+        "h": 62
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_bookshelf_plant",
+      "name": "Biblioteca con planta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 691,
+        "y": 445,
+        "w": 112,
+        "h": 136
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_bookshelf_low",
+      "name": "Estanteria baja",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 355,
+        "y": 457,
+        "w": 120,
+        "h": 120
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_bookshelf_wide",
+      "name": "Estanteria ancha",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 512,
+        "y": 457,
+        "w": 138,
+        "h": 120
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_storage_shelf",
+      "name": "Estanteria almacen",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 848,
+        "y": 459,
+        "w": 116,
+        "h": 127
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_blue_drawer_plant",
+      "name": "Cajonera azul con planta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1032,
+        "y": 461,
+        "w": 85,
+        "h": 117
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_cabinet_glass",
+      "name": "Vitrina archivo",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 216,
+        "y": 463,
+        "w": 94,
+        "h": 105
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_file_cabinet_beige",
+      "name": "Archivador beige",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1348,
+        "y": 464,
+        "w": 69,
+        "h": 117
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_file_cabinet_black",
+      "name": "Archivador negro",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1199,
+        "y": 465,
+        "w": 80,
+        "h": 116
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_storage_low",
+      "name": "Mueble bajo archivo",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 43,
+        "y": 472,
+        "w": 131,
+        "h": 92
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_round",
+      "name": "Planta redonda",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 114,
+        "y": 588,
+        "w": 68,
+        "h": 105
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_tall",
+      "name": "Planta alta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 37,
+        "y": 589,
+        "w": 57,
+        "h": 107
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_leafy",
+      "name": "Planta frondosa",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 304,
+        "y": 592,
+        "w": 70,
+        "h": 102
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_palm",
+      "name": "Palmera interior",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 673,
+        "y": 593,
+        "w": 65,
+        "h": 99
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_box",
+      "name": "Planta rectangular",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 205,
+        "y": 598,
+        "w": 75,
+        "h": 95
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_small_pot",
+      "name": "Planta maceta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 581,
+        "y": 604,
+        "w": 56,
+        "h": 90
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_square",
+      "name": "Planta cuadrada",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 404,
+        "y": 606,
+        "w": 51,
+        "h": 88
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_rug_teal",
+      "name": "Alfombra teal",
+      "category": "floor",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 939,
+        "y": 611,
+        "w": 135,
+        "h": 86
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_rug_red",
+      "name": "Alfombra roja",
+      "category": "floor",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1111,
+        "y": 611,
+        "w": 146,
+        "h": 86
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_rug_beige",
+      "name": "Alfombra beige",
+      "category": "floor",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1293,
+        "y": 613,
+        "w": 159,
+        "h": 84
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_planter_long",
+      "name": "Macetero pequeno",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 488,
+        "y": 616,
+        "w": 54,
+        "h": 78
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_plant_slender",
+      "name": "Jardinera larga",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 775,
+        "y": 616,
+        "w": 109,
+        "h": 75
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_whiteboard",
+      "name": "Pizarra blanca",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 36,
+        "y": 723,
+        "w": 143,
+        "h": 96
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_cork_board",
+      "name": "Panel de corcho",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 216,
+        "y": 725,
+        "w": 147,
+        "h": 96
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_kanban_board",
+      "name": "Panel kanban",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 394,
+        "y": 727,
+        "w": 163,
+        "h": 100
+      },
+      "gridSize": {
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_window_blinds",
+      "name": "Ventana con persiana",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1349,
+        "y": 733,
+        "w": 108,
+        "h": 90
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_chart_board",
+      "name": "Panel de metricas",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 588,
+        "y": 734,
+        "w": 137,
+        "h": 86
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 2
+      }
+    },
+    {
+      "key": "office_wall_shelf",
+      "name": "Estante de pared",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 989,
+        "y": 734,
+        "w": 134,
+        "h": 91
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_clock",
+      "name": "Reloj de pared",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 759,
+        "y": 736,
+        "w": 72,
+        "h": 70
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_picture_landscape",
+      "name": "Cuadro paisaje",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1168,
+        "y": 740,
+        "w": 142,
+        "h": 76
+      },
+      "gridSize": {
+        "w": 3,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_window_teal",
+      "name": "Ventana teal",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 861,
+        "y": 745,
+        "w": 88,
+        "h": 69
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_green_locker",
+      "name": "Armario verde",
+      "category": "interactive",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1282,
+        "y": 839,
+        "w": 82,
+        "h": 129
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true,
+      "interactive": true
+    },
+    {
+      "key": "office_editor_wardrobe",
+      "name": "Armario editor",
+      "category": "interactive",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1397,
+        "y": 839,
+        "w": 103,
+        "h": 139
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 3
+      },
+      "collidable": true,
+      "interactive": true
+    },
+    {
+      "key": "office_desk_lamp",
+      "name": "Lampara de escritorio",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 934,
+        "y": 857,
+        "w": 66,
+        "h": 95
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 2
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_binders",
+      "name": "Archivadores de pie",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 590,
+        "y": 864,
+        "w": 120,
+        "h": 83
+      },
+      "gridSize": {
+        "w": 2,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_storage_box_large",
+      "name": "Caja archivo grande",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 37,
+        "y": 867,
+        "w": 74,
+        "h": 88
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_book_stack",
+      "name": "Pila de libros",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 487,
+        "y": 871,
+        "w": 71,
+        "h": 74
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_picture_frame",
+      "name": "Marco de pared",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1018,
+        "y": 871,
+        "w": 55,
+        "h": 71
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_plant_table",
+      "name": "Mesa pequena con planta",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 741,
+        "y": 872,
+        "w": 51,
+        "h": 73
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_storage_box_small",
+      "name": "Caja archivo pequena",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1172,
+        "y": 872,
+        "w": 81,
+        "h": 76
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_storage_box_white",
+      "name": "Caja blanca",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 219,
+        "y": 873,
+        "w": 62,
+        "h": 79
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_drawer_small",
+      "name": "Cajonera pequena",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 296,
+        "y": 873,
+        "w": 84,
+        "h": 79
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      },
+      "collidable": true
+    },
+    {
+      "key": "office_binder_stack",
+      "name": "Carpetas apiladas",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 826,
+        "y": 873,
+        "w": 83,
+        "h": 76
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_wall_certificate",
+      "name": "Certificado pared",
+      "category": "wall",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 132,
+        "y": 878,
+        "w": 62,
+        "h": 74
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_pencil_cup",
+      "name": "Bote de lapices",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 1097,
+        "y": 878,
+        "w": 53,
+        "h": 66
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "key": "office_paper_stack",
+      "name": "Pila de papel",
+      "category": "furniture",
+      "src": "/assets/officeverse/interiors/office-sprites.png",
+      "frame": {
+        "x": 400,
+        "y": 886,
+        "w": 61,
+        "h": 62
+      },
+      "gridSize": {
+        "w": 1,
+        "h": 1
+      }
+    }
+  ]
+}

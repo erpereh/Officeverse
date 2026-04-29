@@ -12,6 +12,7 @@ import {
   renameOfficeAction,
   saveOfficeLayoutAction,
 } from "@/app/actions";
+import { fitFrameToBox } from "@/lib/asset-rendering";
 import { assetDefinitions, getAssetDefinition } from "@/lib/assets";
 import type { EditorTool } from "@/lib/office-editor";
 import type { Office, OfficeLayoutPayload, OfficeObject } from "@/lib/types";
@@ -37,6 +38,7 @@ const placeableAssets = assetDefinitions.filter(
 const sourceSizes: Record<string, { height: number; width: number }> = {
   "/assets/modern-tiles-free/interiors/Interiors_free_16x16.png": { width: 256, height: 1424 },
   "/assets/modern-tiles-free/interiors/Room_Builder_free_16x16.png": { width: 272, height: 368 },
+  "/assets/officeverse/interiors/office-sprites.png": { width: 1536, height: 1024 },
 };
 
 export function OfficeEditorPanel({
@@ -181,8 +183,8 @@ export function OfficeEditorPanel({
             <div className="mb-3 rounded-md border-2 border-[#f8c85f] bg-[#fff8df] p-2 text-stone-950">
               <p className="text-[11px] font-black uppercase text-teal-700">Seleccionado</p>
               <div className="mt-2 flex items-center gap-3">
-                <div className="flex size-16 shrink-0 items-center justify-center rounded-md border-2 border-stone-900 bg-[#fff8df]">
-                  <AssetPreview asset={selectedAsset} scale={2} />
+                <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-md border-2 border-stone-900 bg-[#fff8df]">
+                  <AssetPreview asset={selectedAsset} maxHeight={72} maxWidth={72} />
                 </div>
                 <div className="min-w-0">
                   <p className="break-words text-sm font-black leading-4">{selectedAsset.name}</p>
@@ -221,8 +223,8 @@ export function OfficeEditorPanel({
                   onSetTool("place");
                 }}
               >
-                <span className="mb-2 flex h-10 items-center justify-center rounded border border-current/20 bg-[#fff8df]/90">
-                  <AssetPreview asset={asset} scale={1} />
+                <span className="mb-2 flex h-12 items-center justify-center overflow-hidden rounded border border-current/20 bg-[#fff8df]/90">
+                  <AssetPreview asset={asset} maxHeight={40} maxWidth={56} />
                 </span>
                 <span className="block break-words font-black leading-4">{asset.name}</span>
                 <span className="mt-1 block text-[11px] opacity-80">
@@ -302,16 +304,19 @@ export function OfficeEditorPanel({
 
 function AssetPreview({
   asset,
-  scale,
+  maxHeight,
+  maxWidth,
 }: {
   asset: (typeof assetDefinitions)[number];
-  scale: number;
+  maxHeight: number;
+  maxWidth: number;
 }) {
   if (!asset.frame) {
     return null;
   }
 
   const sourceSize = sourceSizes[asset.src];
+  const fit = fitFrameToBox(asset.frame, { height: maxHeight, width: maxWidth });
 
   return (
     <span
@@ -319,13 +324,13 @@ function AssetPreview({
       className="block shrink-0 [image-rendering:pixelated]"
       style={{
         backgroundImage: `url(${asset.src})`,
-        backgroundPosition: `${-asset.frame.x * scale}px ${-asset.frame.y * scale}px`,
+        backgroundPosition: `${-asset.frame.x * fit.scale}px ${-asset.frame.y * fit.scale}px`,
         backgroundRepeat: "no-repeat",
         backgroundSize: sourceSize
-          ? `${sourceSize.width * scale}px ${sourceSize.height * scale}px`
+          ? `${sourceSize.width * fit.scale}px ${sourceSize.height * fit.scale}px`
           : undefined,
-        height: asset.frame.h * scale,
-        width: asset.frame.w * scale,
+        height: fit.height,
+        width: fit.width,
       }}
     />
   );

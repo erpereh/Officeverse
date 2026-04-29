@@ -24,25 +24,25 @@ describe("office bootstrap", () => {
     expect(objects).toHaveLength(39);
     expect(objects.map((object) => object.asset_key)).toEqual(
       expect.arrayContaining([
-        "task_board",
-        "wall_board",
-        "wall_map",
-        "bookshelf_basic",
-        "file_cabinet",
-        "wardrobe_editor",
-        "desk_corner",
-        "office_chair_blue",
-        "desk_basic",
-        "chair_basic",
-        "terminal_workstation",
-        "arcade_rug",
-        "meeting_table",
-        "large_rug",
-        "sofa_lounge",
-        "coffee_table",
-        "stacked_boxes",
-        "bookshelf_wide",
-        "plant_basic",
+        "office_kanban_board",
+        "office_whiteboard",
+        "office_chart_board",
+        "office_bookshelf_low",
+        "office_file_cabinet_gray",
+        "office_editor_wardrobe",
+        "office_multi_monitor_station",
+        "office_chair_teal",
+        "office_desk_basic",
+        "office_chair_black",
+        "office_automation_command_center",
+        "office_rug_teal",
+        "office_desk_chair_corner",
+        "office_rug_red",
+        "office_sofa_teal",
+        "office_drawer_small",
+        "office_storage_box_large",
+        "office_bookshelf_plant",
+        "office_plant_tall",
       ]),
     );
     expect(objects.every((object) => object.office_id === "office-1")).toBe(true);
@@ -76,11 +76,11 @@ describe("office bootstrap", () => {
   });
 
   it("places, moves, and deletes editor objects", () => {
-    const object = createObjectFromAsset("office-1", "user-1", "desk_basic", { x: 4, y: 5 });
+    const object = createObjectFromAsset("office-1", "user-1", "office_desk_basic", { x: 4, y: 5 });
     const placed = placeObject([], object);
 
     expect(placed).toHaveLength(1);
-    expect(placed[0].asset_key).toBe("desk_basic");
+    expect(placed[0].asset_key).toBe("office_desk_basic");
 
     const moved = moveObjectAt(placed, { x: 4, y: 5 }, { x: 8, y: 9 });
 

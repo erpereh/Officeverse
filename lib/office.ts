@@ -40,45 +40,45 @@ export function createDefaultOfficeObjects(
   userId: string,
 ): OfficeObject[] {
   return [
-    createOfficeObject(officeId, userId, "wall", "task_board", 4, 2, 1),
-    createOfficeObject(officeId, userId, "wall", "wall_board", 12, 2, 1),
-    createOfficeObject(officeId, userId, "wall", "wall_map", 29, 2, 1),
-    createOfficeObject(officeId, userId, "storage", "bookshelf_basic", 3, 4, 2),
-    createOfficeObject(officeId, userId, "storage", "file_cabinet", 7, 4, 2),
-    createOfficeObject(officeId, userId, "storage", "bookshelf_basic", 11, 4, 2),
-    createOfficeObject(officeId, userId, "storage", "file_cabinet", 33, 4, 2),
-    createOfficeObject(officeId, userId, "interactive", "wardrobe_editor", 36, 4, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_corner", 4, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 6, 10, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_basic", 10, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 11, 9, 2),
-    createOfficeObject(officeId, userId, "terminal", "terminal_workstation", 15, 7, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_wide", 4, 14, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 5, 16, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_basic", 10, 15, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 11, 17, 2),
-    createOfficeObject(officeId, userId, "plant", "plant_basic", 2, 11, 2),
-    createOfficeObject(officeId, userId, "plant", "plant_basic", 14, 16, 2),
-    createOfficeObject(officeId, userId, "rug", "arcade_rug", 25, 8, 1),
-    createOfficeObject(officeId, userId, "meeting", "meeting_table", 27, 9, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 26, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 31, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 26, 12, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 31, 12, 2),
-    createOfficeObject(officeId, userId, "terminal", "terminal_workstation", 34, 10, 2),
-    createOfficeObject(officeId, userId, "rug", "large_rug", 4, 19, 1),
-    createOfficeObject(officeId, userId, "lounge", "sofa_lounge", 4, 20, 2),
-    createOfficeObject(officeId, userId, "lounge", "coffee_table", 11, 20, 2),
-    createOfficeObject(officeId, userId, "plant", "plant_basic", 2, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "stacked_boxes", 17, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "file_cabinet", 21, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "bookshelf_wide", 25, 19, 2),
-    createOfficeObject(officeId, userId, "storage", "stacked_boxes", 33, 20, 2),
-    createOfficeObject(officeId, userId, "plant", "plant_basic", 37, 19, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_basic", 22, 15, 2),
-    createOfficeObject(officeId, userId, "chair", "chair_basic", 23, 17, 2),
-    createOfficeObject(officeId, userId, "desk", "desk_corner", 31, 15, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 33, 17, 2),
+    createOfficeObject(officeId, userId, "wall", "office_kanban_board", 3, 2, 1),
+    createOfficeObject(officeId, userId, "wall", "office_whiteboard", 10, 2, 1),
+    createOfficeObject(officeId, userId, "wall", "office_chart_board", 28, 2, 1),
+    createOfficeObject(officeId, userId, "storage", "office_bookshelf_low", 3, 4, 2),
+    createOfficeObject(officeId, userId, "storage", "office_cabinet_glass", 8, 4, 2),
+    createOfficeObject(officeId, userId, "storage", "office_bookshelf_wide", 13, 4, 2),
+    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_gray", 32, 4, 2),
+    createOfficeObject(officeId, userId, "interactive", "office_editor_wardrobe", 36, 4, 2),
+    createOfficeObject(officeId, userId, "desk", "office_multi_monitor_station", 3, 8, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_black", 6, 11, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 10, 8, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 12, 11, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_automation_command_center", 16, 7, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 4, 14, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_amber", 5, 17, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_dual_terminal", 10, 15, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 12, 18, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 2, 11, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_square", 15, 16, 2),
+    createOfficeObject(officeId, userId, "rug", "office_rug_teal", 25, 8, 1),
+    createOfficeObject(officeId, userId, "meeting", "office_desk_chair_corner", 27, 9, 2),
+    createOfficeObject(officeId, userId, "chair", "office_waiting_chair_teal", 26, 8, 2),
+    createOfficeObject(officeId, userId, "chair", "office_stool_teal", 31, 8, 2),
+    createOfficeObject(officeId, userId, "chair", "office_stool_wood", 26, 12, 2),
+    createOfficeObject(officeId, userId, "chair", "office_armchair_beige", 31, 12, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_retro_terminal", 34, 10, 2),
+    createOfficeObject(officeId, userId, "rug", "office_rug_red", 4, 19, 1),
+    createOfficeObject(officeId, userId, "lounge", "office_sofa_teal", 4, 20, 2),
+    createOfficeObject(officeId, userId, "lounge", "office_drawer_small", 11, 20, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_round", 2, 20, 2),
+    createOfficeObject(officeId, userId, "storage", "office_storage_box_large", 17, 20, 2),
+    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_beige", 21, 20, 2),
+    createOfficeObject(officeId, userId, "storage", "office_bookshelf_plant", 25, 19, 2),
+    createOfficeObject(officeId, userId, "storage", "office_storage_shelf", 33, 20, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_palm", 37, 19, 2),
+    createOfficeObject(officeId, userId, "desk", "office_lamp_desk", 22, 15, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 23, 17, 2),
+    createOfficeObject(officeId, userId, "desk", "office_corner_desk", 31, 15, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_table", 33, 17, 2),
   ];
 }
 
@@ -104,15 +104,14 @@ export function isGridBlocked(point: GridPoint, objects: OfficeObject[]) {
 
     if (
       object.layer < 2 ||
-      object.asset_key === "arcade_rug" ||
-      object.asset_key === "large_rug" ||
+      asset?.category === "floor" ||
       asset?.category === "wall"
     ) {
       return false;
     }
 
-    const w = Number(object.metadata?.grid_w ?? 1);
-    const h = Number(object.metadata?.grid_h ?? 1);
+    const w = asset?.gridSize?.w ?? Number(object.metadata?.grid_w ?? 1);
+    const h = asset?.gridSize?.h ?? Number(object.metadata?.grid_h ?? 1);
 
     return (
       point.x >= object.x &&

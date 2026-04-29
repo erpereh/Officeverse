@@ -27,9 +27,11 @@ Con `NEXT_PUBLIC_OFFICEVERSE_DEBUG=true`, `/auth` muestra un acceso rápido de d
 
 ## Assets
 
-- Fuente original: `assets/vendor/modern-tiles-free/`
-- Assets servidos por la web: `public/assets/modern-tiles-free/`
-- La licencia incluida indica uso no comercial para la versión gratuita. No publiques ni monetices el proyecto con estos assets sin sustituirlos o comprar una licencia compatible.
+- Carpeta unica de assets runtime: `public/assets/`.
+- Personajes y tiles base: `public/assets/modern-tiles-free/`.
+- Sprites de oficina para el editor: `public/assets/officeverse/interiors/office-sprites.png`.
+- Manifest del editor: `public/assets/officeverse/interiors/office-sprites.manifest.json`.
+- La licencia incluida de `modern-tiles-free` indica uso no comercial para la version gratuita. No publiques ni monetices el proyecto con esos assets sin sustituirlos o comprar una licencia compatible.
 
 ## Supabase
 

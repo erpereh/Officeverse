@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { PNG } from "pngjs";
 
-import { assetDefinitions, avatarDefinitions } from "@/lib/assets";
+import { assetDefinitions, avatarDefinitions, getAssetDefinition } from "@/lib/assets";
 import { createDefaultOfficeObjects } from "@/lib/office";
 
 describe("asset manifest", () => {
@@ -71,10 +71,10 @@ describe("asset manifest", () => {
     }
   });
 
-  it("does not use the broken checker-cabinet crop for the automation terminal", () => {
-    const terminal = assetDefinitions.find((asset) => asset.key === "terminal_workstation");
+  it("uses the new Officeverse sprite sheet for office furniture", () => {
+    const terminal = getAssetDefinition("office_automation_command_center");
 
-    expect(terminal?.frame).toBeDefined();
-    expect(terminal?.frame).not.toEqual({ x: 64, y: 880, w: 32, h: 32 });
+    expect(terminal?.src).toBe("/assets/officeverse/interiors/office-sprites.png");
+    expect(getAssetDefinition("terminal_workstation")).toBeUndefined();
   });
 });

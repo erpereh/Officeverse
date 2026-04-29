@@ -2,6 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
+import {
+  fitAssetFrameToGrid,
+  getAssetFootprintPixels,
+  isOfficeverseInteriorAsset,
+} from "@/lib/asset-rendering";
 import { assetDefinitions, getAssetDefinition, getAvatarDefinition } from "@/lib/assets";
 import {
   avatarFrameRanges,
@@ -35,6 +40,18 @@ const tileSize = 16;
 const scale = 3;
 const minViewportWidth = 360;
 const minViewportHeight = 360;
+
+function textureKeyForAssetSource(src: string) {
+  if (src.includes("/officeverse/interiors/office-sprites.png")) {
+    return "office-sprites";
+  }
+
+  if (src.includes("/interiors/Room_Builder_free_16x16.png")) {
+    return "room-builder";
+  }
+
+  return "interiors";
+}
 
 export function OfficeScene({
   editorMode = false,
@@ -118,12 +135,17 @@ export function OfficeScene({
             "interiors",
             "/assets/modern-tiles-free/interiors/Interiors_free_16x16.png",
           );
+          this.load.image(
+            "room-builder",
+            "/assets/modern-tiles-free/interiors/Room_Builder_free_16x16.png",
+          );
+          this.load.image("office-sprites", "/assets/officeverse/interiors/office-sprites.png");
         }
 
         create() {
           this.cameras.main.setBackgroundColor("#182432");
           this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
-          this.registerInteriorFrames();
+          this.registerAssetFrames();
           this.renderRoom();
           this.renderObjects();
           this.renderEditorGrid();
@@ -173,11 +195,11 @@ export function OfficeScene({
           this.player.play(`avatar-run-${this.lastDirection}`, true);
         }
 
-        private registerInteriorFrames() {
-          const texture = this.textures.get("interiors");
-
+        private registerAssetFrames() {
           for (const asset of assetDefinitions) {
-            if (asset.src.includes("/interiors/Interiors_free_16x16.png") && asset.frame) {
+            if (asset.frame) {
+              const texture = this.textures.get(textureKeyForAssetSource(asset.src));
+
               if (!texture.has(asset.key)) {
                 texture.add(
                   asset.key,
@@ -251,11 +273,30 @@ export function OfficeScene({
             }
 
             const pixel = gridToPixel({ x: object.x, y: object.y }, tileSize, scale);
-            const image = this.add
-              .image(pixel.x, pixel.y, "interiors", asset.key)
-              .setOrigin(0)
-              .setScale(scale)
-              .setDepth(pixel.y + asset.frame.h * scale);
+            const footprint = getAssetFootprintPixels(asset, tileSize, scale);
+            const fit = fitAssetFrameToGrid(asset, tileSize, scale);
+            const image = this.add.image(pixel.x, pixel.y, textureKeyForAssetSource(asset.src), asset.key);
+
+            if (isOfficeverseInteriorAsset(asset)) {
+              if (asset.category === "floor") {
+                image
+                  .setOrigin(0)
+                  .setDisplaySize(footprint.width, footprint.height)
+                  .setDepth(pixel.y - 4);
+              } else {
+                image
+                  .setOrigin(0.5, 1)
+                  .setPosition(pixel.x + footprint.width / 2, pixel.y + footprint.height)
+                  .setScale(fit.scale)
+                  .setDepth(pixel.y + footprint.height);
+              }
+            } else {
+              image
+                .setOrigin(0)
+                .setScale(scale)
+                .setDepth(pixel.y + asset.frame.h * scale);
+            }
+
             this.objectGameObjects.push(image);
 
             if (asset.category === "floor") {
@@ -275,13 +316,13 @@ export function OfficeScene({
             if (asset.interactive) {
               const highlight = this.add
                 .rectangle(
-                  pixel.x + (asset.frame.w * scale) / 2,
-                  pixel.y + (asset.frame.h * scale) / 2,
-                  asset.frame.w * scale + 12,
-                  asset.frame.h * scale + 12,
+                  pixel.x + footprint.width / 2,
+                  pixel.y + footprint.height / 2,
+                  footprint.width + 12,
+                  footprint.height + 12,
                 )
                 .setStrokeStyle(3, 0xf8c85f, 0.95)
-                .setDepth(pixel.y + asset.frame.h * scale - 1);
+                .setDepth(pixel.y + footprint.height - 1);
               this.objectGameObjects.push(highlight);
 
               this.tweens.add({
