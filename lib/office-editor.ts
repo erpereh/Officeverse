@@ -1,5 +1,5 @@
 import { getAssetDefinition } from "@/lib/assets";
-import type { OfficeLayoutPayload, OfficeObject } from "@/lib/types";
+import type { AssetDefinition, OfficeLayoutPayload, OfficeObject } from "@/lib/types";
 
 type GridPoint = {
   x: number;
@@ -21,6 +21,9 @@ export function createObjectFromAsset(
     throw new Error(`Unknown asset key: ${assetKey}`);
   }
 
+  const normalizedRotation = normalizeRotation(rotation);
+  const gridSize = getRotatedGridSize(asset, normalizedRotation);
+
   return {
     office_id: officeId,
     user_id: userId,
@@ -28,11 +31,11 @@ export function createObjectFromAsset(
     asset_key: asset.key,
     x: point.x,
     y: point.y,
-    rotation: normalizeRotation(rotation),
+    rotation: normalizedRotation,
     layer: asset.category === "floor" || asset.category === "wall" ? 1 : 2,
     metadata: {
-      grid_w: asset.gridSize?.w ?? 1,
-      grid_h: asset.gridSize?.h ?? 1,
+      grid_w: gridSize.w,
+      grid_h: gridSize.h,
     },
   };
 }
@@ -48,8 +51,9 @@ export function normalizeLayoutPayload(
       throw new Error(`Asset no valido: ${object.asset_key}`);
     }
 
-    const gridWidth = asset.gridSize?.w ?? 1;
-    const gridHeight = asset.gridSize?.h ?? 1;
+    const rotatedGridSize = getRotatedGridSize(asset, object.rotation);
+    const gridWidth = Number(object.metadata?.grid_w ?? rotatedGridSize.w);
+    const gridHeight = Number(object.metadata?.grid_h ?? rotatedGridSize.h);
 
     if (
       object.x < 1 ||
@@ -113,6 +117,21 @@ export function rotateQuarterTurn(rotation: number | undefined) {
   return normalizeRotation((rotation ?? 0) + 90);
 }
 
+export function getRotatedGridSize(
+  asset: Pick<AssetDefinition, "gridSize"> | null | undefined,
+  rotation: number | undefined,
+) {
+  const width = asset?.gridSize?.w ?? 1;
+  const height = asset?.gridSize?.h ?? 1;
+  const normalizedRotation = normalizeRotation(rotation ?? 0);
+
+  if (normalizedRotation === 90 || normalizedRotation === 270) {
+    return { w: height, h: width };
+  }
+
+  return { w: width, h: height };
+}
+
 function normalizeRotation(rotation: number) {
   return ((rotation % 360) + 360) % 360;
 }
@@ -123,8 +142,8 @@ export function findTopObjectIndexAt(objects: OfficeObject[], point: GridPoint) 
 
   objects.forEach((object, index) => {
     const asset = getAssetDefinition(object.asset_key);
-    const width = asset?.gridSize?.w ?? Number(object.metadata?.grid_w ?? 1);
-    const height = asset?.gridSize?.h ?? Number(object.metadata?.grid_h ?? 1);
+    const width = Number(object.metadata?.grid_w ?? asset?.gridSize?.w ?? 1);
+    const height = Number(object.metadata?.grid_h ?? asset?.gridSize?.h ?? 1);
     const contains =
       point.x >= object.x &&
       point.x < object.x + width &&

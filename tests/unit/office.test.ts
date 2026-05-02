@@ -4,6 +4,7 @@ import { getAssetDefinition } from "@/lib/assets";
 import {
   createObjectFromAsset,
   deleteObjectAt,
+  getRotatedGridSize,
   moveObjectAt,
   placeObject,
   rotateQuarterTurn,
@@ -27,32 +28,23 @@ describe("office bootstrap", () => {
   it("creates deterministic template objects on demand", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
 
-    expect(objects).toHaveLength(32);
+    expect(objects).toHaveLength(112);
     expect(objects.map((object) => object.asset_key)).toEqual(
       expect.arrayContaining([
+        "building_wall_column",
+        "building_wall_panel_wide",
+        "building_trim_white_long",
+        "building_rug_beige_large",
+        "building_floor_carpet_teal",
         "office_kanban_board",
         "office_whiteboard",
         "office_chart_board",
         "office_editor_wardrobe",
-        "office_desk_monitor",
-        "office_desk_dual_terminal",
-        "office_desk_basic",
-        "office_chair_black",
-        "office_chair_teal",
-        "office_chair_blue",
+        "office_corner_desk",
         "office_automation_command_center",
         "office_server_rack",
-        "office_rug_teal",
-        "office_rug_red",
-        "office_rug_beige",
         "office_sofa_teal",
-        "office_armchair_beige",
-        "office_drawer_small",
         "office_plant_tall",
-        "office_plant_round",
-        "office_plant_small_pot",
-        "office_plant_square",
-        "building_power_cable",
       ]),
     );
     expect(objects.every((object) => object.office_id === "office-1")).toBe(true);
@@ -60,29 +52,28 @@ describe("office bootstrap", () => {
     expect(objects.every((object) => getAssetDefinition(object.asset_key))).toBe(true);
     expect(objects.some((object) => object.asset_key.startsWith("building_door"))).toBe(false);
     expect(objects.some((object) => object.asset_key.startsWith("building_window"))).toBe(false);
+    expect(objects.some((object) => object.asset_key === "building_exit_arrow_sign")).toBe(false);
   });
 
-  it("keeps template objects inside bounds and grouped by office zones", () => {
+  it("keeps template objects inside bounds using persisted metadata", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
     const keys = objects.map((object) => object.asset_key);
 
     expect(keys).toEqual(
       expect.arrayContaining([
-        "office_desk_monitor",
-        "office_desk_dual_terminal",
-        "office_desk_basic",
+        "building_rug_beige_large",
+        "building_floor_carpet_teal",
+        "office_corner_desk",
         "office_automation_command_center",
         "office_server_rack",
         "office_sofa_teal",
         "office_editor_wardrobe",
-        "building_power_cable",
       ]),
     );
 
     for (const object of objects) {
-      const asset = getAssetDefinition(object.asset_key);
-      const width = asset?.gridSize?.w ?? 1;
-      const height = asset?.gridSize?.h ?? 1;
+      const width = Number(object.metadata?.grid_w ?? 1);
+      const height = Number(object.metadata?.grid_h ?? 1);
 
       expect(object.x, object.asset_key).toBeGreaterThanOrEqual(1);
       expect(object.y, object.asset_key).toBeGreaterThanOrEqual(1);
@@ -92,13 +83,11 @@ describe("office bootstrap", () => {
 
     expect(objects).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ asset_key: "office_desk_monitor", x: 13, y: 7 }),
-        expect.objectContaining({ asset_key: "office_desk_dual_terminal", x: 19, y: 7 }),
-        expect.objectContaining({ asset_key: "office_desk_basic", x: 25, y: 7 }),
-        expect.objectContaining({ asset_key: "office_server_rack", x: 29, y: 4 }),
-        expect.objectContaining({ asset_key: "office_server_rack", x: 32, y: 4 }),
-        expect.objectContaining({ asset_key: "office_sofa_teal", x: 27, y: 17 }),
-        expect.objectContaining({ asset_key: "office_editor_wardrobe", x: 35, y: 12 }),
+        expect.objectContaining({ asset_key: "building_rug_beige_large", x: 18, y: 17, metadata: { grid_w: 4, grid_h: 4 } }),
+        expect.objectContaining({ asset_key: "building_floor_carpet_teal", x: 18, y: 9, metadata: { grid_w: 4, grid_h: 4 } }),
+        expect.objectContaining({ asset_key: "office_automation_command_center", x: 18, y: 9 }),
+        expect.objectContaining({ asset_key: "office_sofa_teal", x: 32, y: 18 }),
+        expect.objectContaining({ asset_key: "office_editor_wardrobe", x: 9, y: 8 }),
       ]),
     );
   });
@@ -122,9 +111,13 @@ describe("office bootstrap", () => {
   it("keeps the spawn point clear in the furnished office", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
 
-    expect(officeSpawnPoint).toEqual({ x: 8, y: 19 });
+    expect(officeSpawnPoint).toEqual({ x: 20, y: 19 });
+    expect(objects).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ asset_key: "building_rug_beige_large", x: 18, y: 17 }),
+      ]),
+    );
     expect(isGridBlocked(officeSpawnPoint, objects)).toBe(false);
-    expect(isGridBlocked({ x: 13, y: 8 }, objects)).toBe(true);
     expect(isGridBlocked({ x: officeSpawnPoint.x - 1, y: officeSpawnPoint.y }, objects)).toBe(false);
     expect(isGridBlocked({ x: officeSpawnPoint.x + 1, y: officeSpawnPoint.y }, objects)).toBe(false);
     expect(isGridBlocked({ x: officeSpawnPoint.x, y: officeSpawnPoint.y - 1 }, objects)).toBe(false);
@@ -138,6 +131,7 @@ describe("office bootstrap", () => {
     expect(placed).toHaveLength(1);
     expect(placed[0].asset_key).toBe("office_desk_basic");
     expect(placed[0].rotation).toBe(90);
+    expect(placed[0].metadata).toMatchObject({ grid_w: 2, grid_h: 3 });
 
     const moved = moveObjectAt(placed, { x: 4, y: 5 }, { x: 8, y: 9 });
 
@@ -153,12 +147,32 @@ describe("office bootstrap", () => {
     expect(rotateQuarterTurn(undefined)).toBe(90);
   });
 
+  it("resolves rotated grid footprints for placement previews", () => {
+    const arrow = getAssetDefinition("building_exit_arrow_sign");
+    const desk = getAssetDefinition("office_desk_basic");
+
+    expect(getRotatedGridSize(arrow, 0)).toEqual({ w: 3, h: 1 });
+    expect(getRotatedGridSize(arrow, 90)).toEqual({ w: 1, h: 3 });
+    expect(getRotatedGridSize(arrow, 270)).toEqual({ w: 1, h: 3 });
+    expect(getRotatedGridSize(desk, 180)).toEqual({ w: 3, h: 2 });
+  });
+
   it("deletes wall objects placed on map borders and leaves empty cells unchanged", () => {
-    const arrow = createObjectFromAsset("office-1", "user-1", "building_exit_arrow_sign", { x: 0, y: 14 });
+    const arrow = createObjectFromAsset("office-1", "user-1", "building_exit_arrow_sign", { x: 0, y: 14 }, 90);
     const chair = createObjectFromAsset("office-1", "user-1", "office_chair_black", { x: 2, y: 14 });
     const placed = placeObject([arrow], chair);
 
-    expect(deleteObjectAt(placed, { x: 1, y: 14 })).toEqual([chair]);
+    expect(arrow).toMatchObject({ rotation: 90, metadata: { grid_w: 1, grid_h: 3 } });
+    expect(deleteObjectAt(placed, { x: 0, y: 16 })).toEqual([chair]);
     expect(deleteObjectAt(placed, { x: 30, y: 20 })).toBe(placed);
+  });
+
+  it("selects the top object using persisted rotated metadata", () => {
+    const arrow = createObjectFromAsset("office-1", "user-1", "building_exit_arrow_sign", { x: 4, y: 4 }, 90);
+    const chair = createObjectFromAsset("office-1", "user-1", "office_chair_black", { x: 4, y: 5 });
+    const placed = placeObject([arrow], chair);
+
+    expect(deleteObjectAt(placed, { x: 4, y: 4 })).toEqual([chair]);
+    expect(deleteObjectAt(placed, { x: 4, y: 5 })).toEqual([arrow]);
   });
 });

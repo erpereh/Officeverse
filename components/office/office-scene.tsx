@@ -13,7 +13,7 @@ import {
   resolveFacingDirection,
   type FacingDirection,
 } from "@/lib/office-direction";
-import type { EditorTool } from "@/lib/office-editor";
+import { getRotatedGridSize, type EditorTool } from "@/lib/office-editor";
 import { createRoomBasePlacements } from "@/lib/office-room";
 import { fitMapToViewport, gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
@@ -117,7 +117,9 @@ export function OfficeScene({
 
       class OfficePhaserScene extends Phaser.Scene {
         private editorGrid?: Phaser.GameObjects.Graphics;
-        private ghost?: Phaser.GameObjects.Rectangle;
+        private ghostOutline?: Phaser.GameObjects.Rectangle;
+        private ghostSprite?: Phaser.GameObjects.Image;
+        private ghostSpriteAssetKey?: string;
         private objectGameObjects: Phaser.GameObjects.GameObject[] = [];
         private objectSolidRects: Phaser.Geom.Rectangle[] = [];
         private player?: Phaser.GameObjects.Sprite;
@@ -126,6 +128,7 @@ export function OfficeScene({
         private wallSolidRects: Phaser.Geom.Rectangle[] = [];
         private hudText?: Phaser.GameObjects.Text;
         private lastDirection: FacingDirection = "down";
+        private lastGhostWorld?: { x: number; y: number };
 
         constructor() {
           super("office");
@@ -313,8 +316,8 @@ export function OfficeScene({
             }
 
             if (asset.collidable) {
-              const width = (asset.gridSize?.w ?? 1) * tileSize * scale;
-              const height = (asset.gridSize?.h ?? 1) * tileSize * scale;
+              const width = Number(object.metadata?.grid_w ?? asset.gridSize?.w ?? 1) * tileSize * scale;
+              const height = Number(object.metadata?.grid_h ?? asset.gridSize?.h ?? 1) * tileSize * scale;
               this.objectSolidRects.push(new Phaser.Geom.Rectangle(pixel.x, pixel.y, width, height));
             }
 
@@ -339,6 +342,10 @@ export function OfficeScene({
               });
               image.setInteractive({ useHandCursor: true });
               image.on("pointerdown", () => {
+                if (editorStateRef.current.enabled) {
+                  return;
+                }
+
                 this.add
                   .text(pixel.x - 16, pixel.y - 28, "Editor pronto", {
                     color: "#1f2937",
@@ -452,12 +459,11 @@ export function OfficeScene({
             const y = Math.floor(pointer.worldY / (tileSize * scale));
             const office = stateRef.current.office;
             const asset = getAssetDefinition(editorStateRef.current.selectedAssetKey);
-            const width = asset?.gridSize?.w ?? 1;
-            const height = asset?.gridSize?.h ?? 1;
+            const gridSize = getRotatedGridSize(asset, editorStateRef.current.selectedRotation);
 
             if (
               editorStateRef.current.tool === "place" &&
-              this.isEditableCell(x, y, width, height)
+              this.isEditableCell(x, y, gridSize.w, gridSize.h)
             ) {
               gridClickRef.current?.({ x, y });
               return;
@@ -482,10 +488,12 @@ export function OfficeScene({
           if (nextEditorState.enabled) {
             this.cameras.main.stopFollow();
             this.fitCameraToOffice();
-            this.ensureGhost();
-            this.ghost?.setVisible(false);
+            this.hideGhost();
+            if (this.lastGhostWorld) {
+              this.updateGhost(this.lastGhostWorld.x, this.lastGhostWorld.y);
+            }
           } else {
-            this.ghost?.setVisible(false);
+            this.hideGhost();
             if (this.player) {
               this.cameras.main.setZoom(1);
               this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
@@ -513,37 +521,106 @@ export function OfficeScene({
           this.renderObjects();
         }
 
-        private ensureGhost() {
-          if (this.ghost) {
-            return;
-          }
-
-          this.ghost = this.add
+        private ensureGhost(assetKey: string) {
+          if (!this.ghostOutline) {
+            this.ghostOutline = this.add
             .rectangle(0, 0, tileSize * scale, tileSize * scale)
             .setOrigin(0.5)
             .setStrokeStyle(2, 0x14b8a6, 0.95)
             .setFillStyle(0x14b8a6, 0.18)
             .setDepth(9995)
             .setVisible(false);
+          }
+
+          if (this.ghostSprite && this.ghostSpriteAssetKey === assetKey) {
+            return;
+          }
+
+          this.ghostSprite?.destroy();
+          const asset = getAssetDefinition(assetKey);
+
+          if (!asset?.frame) {
+            this.ghostSprite = undefined;
+            this.ghostSpriteAssetKey = undefined;
+            return;
+          }
+
+          this.ghostSprite = this.add
+            .image(0, 0, textureKeyForAssetSource(asset.src), asset.key)
+            .setAlpha(0.46)
+            .setDepth(9994)
+            .setVisible(false);
+          this.ghostSpriteAssetKey = assetKey;
+        }
+
+        private hideGhost() {
+          this.ghostOutline?.setVisible(false);
+          this.ghostSprite?.setVisible(false);
         }
 
         private updateGhost(worldX: number, worldY: number) {
-          this.ensureGhost();
+          this.lastGhostWorld = { x: worldX, y: worldY };
           const asset = getAssetDefinition(editorStateRef.current.selectedAssetKey);
-          const width = (asset?.gridSize?.w ?? 1) * tileSize * scale;
-          const height = (asset?.gridSize?.h ?? 1) * tileSize * scale;
+
+          if (!asset?.frame || editorStateRef.current.tool !== "place") {
+            this.hideGhost();
+            return;
+          }
+
+          this.ensureGhost(asset.key);
+          const baseWidth = (asset.gridSize?.w ?? 1) * tileSize * scale;
+          const baseHeight = (asset.gridSize?.h ?? 1) * tileSize * scale;
+          const gridSize = getRotatedGridSize(asset, editorStateRef.current.selectedRotation);
+          const width = gridSize.w * tileSize * scale;
+          const height = gridSize.h * tileSize * scale;
           const x = Math.floor(worldX / (tileSize * scale));
           const y = Math.floor(worldY / (tileSize * scale));
           const pixel = gridToPixel({ x, y }, tileSize, scale);
-          const valid = this.isEditableCell(x, y, asset?.gridSize?.w ?? 1, asset?.gridSize?.h ?? 1);
+          const valid = this.isEditableCell(x, y, gridSize.w, gridSize.h);
 
-          this.ghost
+          this.ghostOutline
             ?.setPosition(pixel.x + width / 2, pixel.y + height / 2)
-            .setSize(width, height)
+            .setSize(baseWidth, baseHeight)
             .setAngle(editorStateRef.current.selectedRotation)
             .setFillStyle(valid ? 0x14b8a6 : 0xef4444, 0.18)
             .setStrokeStyle(2, valid ? 0x14b8a6 : 0xef4444, 0.95)
             .setVisible(true);
+
+          this.positionGhostSprite(asset, pixel, editorStateRef.current.selectedRotation);
+        }
+
+        private positionGhostSprite(
+          asset: NonNullable<ReturnType<typeof getAssetDefinition>>,
+          pixel: { x: number; y: number },
+          rotation: number,
+        ) {
+          if (!this.ghostSprite) {
+            return;
+          }
+
+          const footprint = getAssetFootprintPixels(asset, tileSize, scale);
+          const fit = fitAssetFrameToGrid(asset, tileSize, scale);
+
+          if (isOfficeverseGeneratedAsset(asset)) {
+            if (asset.category === "floor") {
+              this.ghostSprite
+                .setOrigin(0)
+                .setPosition(pixel.x, pixel.y)
+                .setDisplaySize(footprint.width, footprint.height);
+            } else {
+              this.ghostSprite
+                .setOrigin(0.5, 1)
+                .setPosition(pixel.x + footprint.width / 2, pixel.y + footprint.height)
+                .setScale(fit.scale);
+            }
+          } else {
+            this.ghostSprite
+              .setOrigin(0)
+              .setPosition(pixel.x, pixel.y)
+              .setScale(scale);
+          }
+
+          this.ghostSprite.setAngle(rotation).setVisible(true);
         }
 
         private isEditableCell(x: number, y: number, width: number, height: number) {

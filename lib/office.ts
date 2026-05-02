@@ -1,5 +1,6 @@
 import { getAssetDefinition } from "@/lib/assets";
 import type { OfficeObject } from "@/lib/types";
+import debugOfficeStore from "@/data/debug-offices.json";
 
 type GridPoint = {
   x: number;
@@ -15,7 +16,31 @@ export function gridToPixel(point: GridPoint, tileSize: number, scale: number) {
 
 export const defaultOfficeWidth = 40;
 export const defaultOfficeHeight = 24;
-export const officeSpawnPoint = { x: 8, y: 19 };
+export const officeSpawnPoint = { x: 20, y: 19 };
+
+const defaultTemplateSourceOfficeId = "00000000-0000-4000-8000-000000000101";
+const excludedTemplateAssetKeys = new Set(["building_exit_arrow_sign"]);
+
+type OfficeTemplateObject = Pick<
+  OfficeObject,
+  "asset_key" | "layer" | "metadata" | "object_type" | "rotation" | "x" | "y"
+>;
+
+const defaultOfficeTemplateObjects: OfficeTemplateObject[] =
+  debugOfficeStore.objectsByOfficeId[defaultTemplateSourceOfficeId]
+    .filter((object) => !excludedTemplateAssetKeys.has(object.asset_key))
+    .map((object) => ({
+      object_type: object.object_type,
+      asset_key: object.asset_key,
+      x: object.x,
+      y: object.y,
+      rotation: object.rotation ?? 0,
+      layer: object.layer ?? 1,
+      metadata: {
+        grid_w: Number(object.metadata?.grid_w ?? 1),
+        grid_h: Number(object.metadata?.grid_h ?? 1),
+      },
+    }));
 
 export function fitMapToViewport(
   viewport: { width: number; height: number },
@@ -39,45 +64,12 @@ export function createDefaultOfficeObjects(
   officeId: string,
   userId: string,
 ): OfficeObject[] {
-  return [
-    createOfficeObject(officeId, userId, "wall", "office_kanban_board", 11, 2, 1),
-    createOfficeObject(officeId, userId, "wall", "office_whiteboard", 17, 2, 1),
-    createOfficeObject(officeId, userId, "wall", "office_chart_board", 23, 2, 1),
-    createOfficeObject(officeId, userId, "wall", "building_power_cable", 31, 3, 1),
-
-    createOfficeObject(officeId, userId, "floor", "office_rug_teal", 6, 18, 1),
-    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 10, 16, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 11, 18, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_square", 14, 18, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_small_pot", 4, 17, 2),
-
-    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 13, 7, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_black", 14, 9, 2),
-    createOfficeObject(officeId, userId, "desk", "office_desk_dual_terminal", 19, 7, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 21, 9, 2),
-    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 25, 7, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 26, 9, 2),
-    createOfficeObject(officeId, userId, "floor", "office_rug_beige", 17, 11, 1),
-    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 10, 10, 2),
-
-    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 29, 4, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 32, 4, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_automation_command_center", 27, 8, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_retro_terminal", 34, 8, 2),
-    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 30, 12, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_black", 31, 14, 2),
-
-    createOfficeObject(officeId, userId, "floor", "office_rug_red", 27, 17, 1),
-    createOfficeObject(officeId, userId, "lounge", "office_sofa_teal", 27, 17, 2),
-    createOfficeObject(officeId, userId, "lounge", "office_drawer_small", 31, 18, 2),
-    createOfficeObject(officeId, userId, "lounge", "office_armchair_beige", 33, 17, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_round", 35, 17, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 35, 20, 2),
-
-    createOfficeObject(officeId, userId, "interactive", "office_editor_wardrobe", 35, 12, 2),
-    createOfficeObject(officeId, userId, "storage", "office_bookshelf_low", 4, 4, 2),
-    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_gray", 8, 4, 2),
-  ];
+  return defaultOfficeTemplateObjects.map((object) => ({
+    ...object,
+    office_id: officeId,
+    user_id: userId,
+    metadata: { ...object.metadata },
+  }));
 }
 
 export function createEmptyOfficeObjects(): OfficeObject[] {
@@ -108,8 +100,8 @@ export function isGridBlocked(point: GridPoint, objects: OfficeObject[]) {
       return false;
     }
 
-    const w = asset?.gridSize?.w ?? Number(object.metadata?.grid_w ?? 1);
-    const h = asset?.gridSize?.h ?? Number(object.metadata?.grid_h ?? 1);
+    const w = Number(object.metadata?.grid_w ?? asset?.gridSize?.w ?? 1);
+    const h = Number(object.metadata?.grid_h ?? asset?.gridSize?.h ?? 1);
 
     return (
       point.x >= object.x &&
@@ -118,31 +110,4 @@ export function isGridBlocked(point: GridPoint, objects: OfficeObject[]) {
       point.y < object.y + h
     );
   });
-}
-
-function createOfficeObject(
-  officeId: string,
-  userId: string,
-  objectType: string,
-  assetKey: string,
-  x: number,
-  y: number,
-  layer: number,
-): OfficeObject {
-  const asset = getAssetDefinition(assetKey);
-
-  return {
-    office_id: officeId,
-    user_id: userId,
-    object_type: objectType,
-    asset_key: assetKey,
-    x,
-    y,
-    rotation: 0,
-    layer,
-    metadata: {
-      grid_w: asset?.gridSize?.w ?? 1,
-      grid_h: asset?.gridSize?.h ?? 1,
-    },
-  };
 }
