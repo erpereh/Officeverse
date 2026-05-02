@@ -6,7 +6,7 @@ type GridPoint = {
   y: number;
 };
 
-export type EditorTool = "delete" | "move" | "place";
+export type EditorTool = "delete" | "move" | "place" | "rotate";
 
 export function createObjectFromAsset(
   officeId: string,
@@ -106,6 +106,24 @@ export function moveObjectAt(
   return objects.map((object, objectIndex) =>
     objectIndex === index ? { ...object, x: to.x, y: to.y } : object,
   );
+}
+
+export function rotateObjectAt(objects: OfficeObject[], point: GridPoint) {
+  const index = findTopObjectIndexAt(objects, point);
+
+  if (index < 0) {
+    return objects;
+  }
+
+  return objects.map((object, objectIndex) =>
+    objectIndex === index
+      ? { ...object, rotation: normalizeRotation(object.rotation + 90) }
+      : object,
+  );
+}
+
+function normalizeRotation(rotation: number) {
+  return ((rotation % 360) + 360) % 360;
 }
 
 export function findTopObjectIndexAt(objects: OfficeObject[], point: GridPoint) {

@@ -17,8 +17,8 @@
       {
         "object_type": "wall",
         "asset_key": "office_kanban_board",
-        "x": 11,
-        "y": 2,
+        "x": 6,
+        "y": 1,
         "rotation": 0,
         "layer": 1,
         "metadata": {
@@ -31,22 +31,8 @@
       {
         "object_type": "wall",
         "asset_key": "office_whiteboard",
-        "x": 17,
-        "y": 2,
-        "rotation": 0,
-        "layer": 1,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "wall",
-        "asset_key": "office_chart_board",
-        "x": 23,
-        "y": 2,
+        "x": 26,
+        "y": 1,
         "rotation": 0,
         "layer": 1,
         "metadata": {
@@ -75,7 +61,7 @@
         "asset_key": "office_rug_teal",
         "x": 6,
         "y": 18,
-        "rotation": 0,
+        "rotation": 180,
         "layer": 1,
         "metadata": {
           "grid_w": 3,
@@ -131,63 +117,7 @@
         "asset_key": "office_plant_small_pot",
         "x": 4,
         "y": 17,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_monitor",
-        "x": 13,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_black",
-        "x": 14,
-        "y": 9,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_dual_terminal",
-        "x": 19,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 4,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_teal",
-        "x": 21,
-        "y": 9,
-        "rotation": 0,
+        "rotation": 90,
         "layer": 2,
         "metadata": {
           "grid_w": 1,
@@ -201,7 +131,7 @@
         "asset_key": "office_desk_basic",
         "x": 25,
         "y": 7,
-        "rotation": 0,
+        "rotation": 180,
         "layer": 2,
         "metadata": {
           "grid_w": 3,
@@ -243,7 +173,7 @@
         "asset_key": "office_plant_tall",
         "x": 10,
         "y": 10,
-        "rotation": 0,
+        "rotation": 90,
         "layer": 2,
         "metadata": {
           "grid_w": 1,
@@ -285,7 +215,7 @@
         "asset_key": "office_automation_command_center",
         "x": 27,
         "y": 8,
-        "rotation": 0,
+        "rotation": 90,
         "layer": 2,
         "metadata": {
           "grid_w": 4,
@@ -313,7 +243,7 @@
         "asset_key": "office_desk_monitor",
         "x": 30,
         "y": 12,
-        "rotation": 0,
+        "rotation": 90,
         "layer": 2,
         "metadata": {
           "grid_w": 3,
@@ -327,7 +257,7 @@
         "asset_key": "office_chair_black",
         "x": 31,
         "y": 14,
-        "rotation": 0,
+        "rotation": 270,
         "layer": 2,
         "metadata": {
           "grid_w": 1,
@@ -435,26 +365,404 @@
         "user_id": "00000000-0000-4000-8000-000000000001"
       },
       {
-        "object_type": "furniture",
-        "asset_key": "office_bookshelf_low",
-        "x": 4,
-        "y": 4,
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 1,
         "rotation": 0,
-        "layer": 2,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_certificate",
+        "x": 12,
+        "y": 2,
+        "rotation": 90,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 2,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "office_picture_landscape",
+        "x": 22,
+        "y": 2,
+        "rotation": 0,
+        "layer": 1,
         "metadata": {
           "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "office_picture_landscape",
+        "x": 14,
+        "y": 2,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
           "grid_h": 2
         },
         "office_id": "00000000-0000-4000-8000-000000000101",
         "user_id": "00000000-0000-4000-8000-000000000001"
       },
       {
-        "object_type": "furniture",
-        "asset_key": "office_file_cabinet_gray",
-        "x": 8,
+        "object_type": "wall",
+        "asset_key": "building_wall_panel_wide",
+        "x": 1,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 4,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_panel_wide",
+        "x": 35,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 4,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 3,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 2,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 5,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 8,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 9,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 10,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 11,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 12,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 13,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 14,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 15,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 16,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 17,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 18,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 19,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 20,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 21,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 2,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 3,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
         "y": 4,
         "rotation": 0,
-        "layer": 2,
+        "layer": 1,
         "metadata": {
           "grid_w": 1,
           "grid_h": 2
@@ -465,8 +773,8 @@
       {
         "object_type": "wall",
         "asset_key": "building_wall_column",
-        "x": 38,
-        "y": 1,
+        "x": 1,
+        "y": 5,
         "rotation": 0,
         "layer": 1,
         "metadata": {
@@ -479,13 +787,293 @@
       {
         "object_type": "wall",
         "asset_key": "building_wall_column",
-        "x": 38,
-        "y": 1,
+        "x": 1,
+        "y": 6,
         "rotation": 0,
         "layer": 1,
         "metadata": {
           "grid_w": 1,
           "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 7,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 8,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 9,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 10,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 11,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 12,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 13,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 14,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 15,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 16,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 17,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 18,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 19,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 20,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 1,
+        "y": 21,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_trim_white_long",
+        "x": 2,
+        "y": 6,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_trim_white_long",
+        "x": 5,
+        "y": 6,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_trim_white_long",
+        "x": 8,
+        "y": 6,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_trim_white_long",
+        "x": 11,
+        "y": 6,
+        "rotation": 90,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_trim_white_long",
+        "x": 14,
+        "y": 7,
+        "rotation": 90,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 1
         },
         "office_id": "00000000-0000-4000-8000-000000000101",
         "user_id": "00000000-0000-4000-8000-000000000001"

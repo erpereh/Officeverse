@@ -14,6 +14,7 @@ import {
   type EditorTool,
   moveObjectAt,
   placeObject,
+  rotateObjectAt,
 } from "@/lib/office-editor";
 import { createClient } from "@/lib/supabase/client";
 import type { Office, OfficeObject, OfficeState } from "@/lib/types";
@@ -76,6 +77,12 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
           setDirty(true);
           setMoveFrom(null);
           return moveObjectAt(current, moveFrom, point);
+        }
+
+        if (editorTool === "rotate") {
+          const rotated = rotateObjectAt(current, point);
+          setDirty(rotated !== current);
+          return rotated;
         }
 
         setDirty(true);

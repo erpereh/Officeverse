@@ -17,20 +17,18 @@ describe("office room base", () => {
     expect(placements.filter((placement) => placement.assetKey === "building_floor_blue_tile")).toHaveLength(0);
   });
 
-  it("builds a closed office shell with bottom-left entrance and windows", () => {
+  it("builds a closed office shell without doors or windows", () => {
     const placements = createRoomBasePlacements(defaultOfficeWidth, defaultOfficeHeight);
 
     expect(placements).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ assetKey: "building_door_double_glass", x: 5, y: defaultOfficeHeight - 5 }),
-        expect.objectContaining({ assetKey: "building_window_double" }),
-        expect.objectContaining({ assetKey: "building_window_quad" }),
-        expect.objectContaining({ assetKey: "building_window_blinds_wide" }),
         expect.objectContaining({ assetKey: "building_wall_panel_clean", x: 2, y: 1 }),
         expect.objectContaining({ assetKey: "building_baseboard_blue_medium", x: 2, y: 3 }),
         expect.objectContaining({ assetKey: "building_trim_white_long", x: 2, y: defaultOfficeHeight - 2 }),
       ]),
     );
+    expect(placements.some((placement) => placement.assetKey.startsWith("building_door"))).toBe(false);
+    expect(placements.some((placement) => placement.assetKey.startsWith("building_window"))).toBe(false);
 
     for (const placement of placements) {
       const asset = getAssetDefinition(placement.assetKey);

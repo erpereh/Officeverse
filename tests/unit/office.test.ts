@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { getAssetDefinition } from "@/lib/assets";
-import { createObjectFromAsset, deleteObjectAt, moveObjectAt, placeObject } from "@/lib/office-editor";
+import {
+  createObjectFromAsset,
+  deleteObjectAt,
+  moveObjectAt,
+  placeObject,
+  rotateObjectAt,
+} from "@/lib/office-editor";
 import {
   createEmptyOfficeObjects,
   createDefaultOfficeObjects,
@@ -52,6 +58,8 @@ describe("office bootstrap", () => {
     expect(objects.every((object) => object.office_id === "office-1")).toBe(true);
     expect(objects.every((object) => object.user_id === "user-1")).toBe(true);
     expect(objects.every((object) => getAssetDefinition(object.asset_key))).toBe(true);
+    expect(objects.some((object) => object.asset_key.startsWith("building_door"))).toBe(false);
+    expect(objects.some((object) => object.asset_key.startsWith("building_window"))).toBe(false);
   });
 
   it("keeps template objects inside bounds and grouped by office zones", () => {
@@ -134,5 +142,21 @@ describe("office bootstrap", () => {
 
     expect(moved[0]).toMatchObject({ x: 8, y: 9 });
     expect(deleteObjectAt(moved, { x: 8, y: 9 })).toEqual([]);
+  });
+
+  it("rotates editor objects clockwise in quarter turns", () => {
+    const object = createObjectFromAsset("office-1", "user-1", "office_desk_basic", { x: 4, y: 5 });
+    const placed = placeObject([], object);
+
+    const rotated90 = rotateObjectAt(placed, { x: 4, y: 5 });
+    const rotated180 = rotateObjectAt(rotated90, { x: 4, y: 5 });
+    const rotated270 = rotateObjectAt(rotated180, { x: 4, y: 5 });
+    const rotated0 = rotateObjectAt(rotated270, { x: 4, y: 5 });
+
+    expect(rotated90[0].rotation).toBe(90);
+    expect(rotated180[0].rotation).toBe(180);
+    expect(rotated270[0].rotation).toBe(270);
+    expect(rotated0[0].rotation).toBe(0);
+    expect(rotateObjectAt(placed, { x: 20, y: 20 })).toBe(placed);
   });
 });

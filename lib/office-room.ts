@@ -58,10 +58,7 @@ function createWallDecor(
   height: number,
   add: (assetKey: string, x: number, y: number, depth: number) => void,
 ) {
-  add("building_door_double_glass", 5, height - 5, -8);
-  add("building_window_double", 6, 1, -9);
-  add("building_window_quad", 27, 1, -9);
-  add("building_window_blinds_wide", width - 6, 5, -9);
+  void width;
   add("building_clock_digital", 18, 1, -7);
   add("building_exit_arrow_sign", 9, height - 3, -7);
 }

@@ -15,7 +15,7 @@ import {
 } from "@/lib/office-direction";
 import type { EditorTool } from "@/lib/office-editor";
 import { createRoomBasePlacements } from "@/lib/office-room";
-import { gridToPixel, officeSpawnPoint } from "@/lib/office";
+import { fitMapToViewport, gridToPixel, officeSpawnPoint } from "@/lib/office";
 import type { OfficeState } from "@/lib/types";
 
 type OfficeSceneProps = {
@@ -296,6 +296,8 @@ export function OfficeScene({
                 .setDepth(pixel.y + asset.frame.h * scale);
             }
 
+            image.setAngle(object.rotation ?? 0);
+
             this.objectGameObjects.push(image);
 
             if (asset.category === "floor") {
@@ -458,15 +460,28 @@ export function OfficeScene({
 
           if (nextEditorState.enabled) {
             this.cameras.main.stopFollow();
+            this.fitCameraToOffice();
             this.ensureGhost();
             this.ghost?.setVisible(false);
           } else {
             this.ghost?.setVisible(false);
             if (this.player) {
+              this.cameras.main.setZoom(1);
               this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
             }
           }
           this.updateSceneHud();
+        }
+
+        private fitCameraToOffice() {
+          const fit = fitMapToViewport(
+            { width: this.scale.width, height: this.scale.height },
+            { width: worldWidth, height: worldHeight },
+          );
+          const zoom = Math.min(fit.zoom, 1);
+
+          this.cameras.main.setZoom(zoom);
+          this.cameras.main.centerOn(worldWidth / 2, worldHeight / 2);
         }
 
         private setObjects(objects: OfficeState["objects"]) {

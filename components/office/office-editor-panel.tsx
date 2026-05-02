@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, Eraser, FolderPlus, Move, Paintbrush, Save, Trash2, Wand2, X } from "lucide-react";
+import { Copy, Eraser, FolderPlus, Move, Paintbrush, RotateCw, Save, Trash2, Wand2, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useMemo, useState, useTransition } from "react";
 
@@ -242,6 +242,7 @@ export function OfficeEditorPanel({
         <div className="mt-3 space-y-2">
           <ToolButton active={editorTool === "place"} icon={<Paintbrush />} label="Colocar" onClick={() => onSetTool("place")} />
           <ToolButton active={editorTool === "move"} icon={<Move />} label="Mover" onClick={() => onSetTool("move")} />
+          <ToolButton active={editorTool === "rotate"} icon={<RotateCw />} label="Rotar" onClick={() => onSetTool("rotate")} />
           <ToolButton active={editorTool === "delete"} icon={<Eraser />} label="Borrar" onClick={() => onSetTool("delete")} />
           <ToolButton active={false} icon={<Wand2 />} label="Cargar plantilla" onClick={loadTemplate} />
           <button
