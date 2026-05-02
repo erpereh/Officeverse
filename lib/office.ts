@@ -15,7 +15,7 @@ export function gridToPixel(point: GridPoint, tileSize: number, scale: number) {
 
 export const defaultOfficeWidth = 40;
 export const defaultOfficeHeight = 24;
-export const officeSpawnPoint = { x: 19, y: 12 };
+export const officeSpawnPoint = { x: 8, y: 19 };
 
 export function fitMapToViewport(
   viewport: { width: number; height: number },
@@ -40,52 +40,43 @@ export function createDefaultOfficeObjects(
   userId: string,
 ): OfficeObject[] {
   return [
-    createOfficeObject(officeId, userId, "wall", "office_kanban_board", 5, 1, 1),
-    createOfficeObject(officeId, userId, "wall", "office_whiteboard", 12, 1, 1),
-    createOfficeObject(officeId, userId, "wall", "building_wall_badge_blue", 26, 1, 1),
-    createOfficeObject(officeId, userId, "wall", "office_chart_board", 29, 1, 1),
+    createOfficeObject(officeId, userId, "wall", "office_kanban_board", 11, 2, 1),
+    createOfficeObject(officeId, userId, "wall", "office_whiteboard", 17, 2, 1),
+    createOfficeObject(officeId, userId, "wall", "office_chart_board", 23, 2, 1),
+    createOfficeObject(officeId, userId, "wall", "building_power_cable", 31, 3, 1),
 
-    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 17, 5, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_black", 18, 7, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_square", 15, 5, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_small_pot", 23, 5, 2),
+    createOfficeObject(officeId, userId, "floor", "office_rug_teal", 6, 18, 1),
+    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 10, 16, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 11, 18, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_square", 14, 18, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_small_pot", 4, 17, 2),
 
-    createOfficeObject(officeId, userId, "storage", "office_bookshelf_low", 3, 5, 2),
-    createOfficeObject(officeId, userId, "storage", "office_cabinet_glass", 8, 5, 2),
-    createOfficeObject(officeId, userId, "interactive", "office_editor_wardrobe", 35, 5, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 13, 7, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_black", 14, 9, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_dual_terminal", 19, 7, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 21, 9, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 25, 7, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 26, 9, 2),
+    createOfficeObject(officeId, userId, "floor", "office_rug_beige", 17, 11, 1),
+    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 10, 10, 2),
 
-    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 4, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_black", 5, 10, 2),
-    createOfficeObject(officeId, userId, "desk", "office_desk_dual_terminal", 10, 8, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_teal", 12, 10, 2),
-    createOfficeObject(officeId, userId, "desk", "office_desk_basic", 4, 13, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_amber", 5, 15, 2),
-    createOfficeObject(officeId, userId, "desk", "office_multi_monitor_station", 10, 13, 2),
-    createOfficeObject(officeId, userId, "chair", "office_chair_blue", 12, 15, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 2, 12, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 29, 4, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 32, 4, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_automation_command_center", 27, 8, 2),
+    createOfficeObject(officeId, userId, "terminal", "office_retro_terminal", 34, 8, 2),
+    createOfficeObject(officeId, userId, "desk", "office_desk_monitor", 30, 12, 2),
+    createOfficeObject(officeId, userId, "chair", "office_chair_black", 31, 14, 2),
 
-    createOfficeObject(officeId, userId, "terminal", "office_automation_command_center", 25, 7, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 31, 7, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_server_rack", 34, 7, 2),
-    createOfficeObject(officeId, userId, "storage", "office_storage_shelf", 31, 12, 2),
-    createOfficeObject(officeId, userId, "terminal", "office_retro_terminal", 35, 12, 2),
-    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_black", 28, 13, 2),
-    createOfficeObject(officeId, userId, "wall", "building_power_cable", 31, 4, 1),
+    createOfficeObject(officeId, userId, "floor", "office_rug_red", 27, 17, 1),
+    createOfficeObject(officeId, userId, "lounge", "office_sofa_teal", 27, 17, 2),
+    createOfficeObject(officeId, userId, "lounge", "office_drawer_small", 31, 18, 2),
+    createOfficeObject(officeId, userId, "lounge", "office_armchair_beige", 33, 17, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_round", 35, 17, 2),
+    createOfficeObject(officeId, userId, "plant", "office_plant_tall", 35, 20, 2),
 
-    createOfficeObject(officeId, userId, "floor", "office_rug_teal", 22, 16, 1),
-    createOfficeObject(officeId, userId, "desk", "office_desk_chair_corner", 24, 16, 2),
-    createOfficeObject(officeId, userId, "chair", "office_waiting_chair_teal", 23, 15, 2),
-    createOfficeObject(officeId, userId, "chair", "office_stool_teal", 29, 15, 2),
-    createOfficeObject(officeId, userId, "chair", "office_armchair_beige", 29, 19, 2),
-
-    createOfficeObject(officeId, userId, "floor", "office_rug_red", 4, 18, 1),
-    createOfficeObject(officeId, userId, "lounge", "office_sofa_teal", 5, 20, 2),
-    createOfficeObject(officeId, userId, "lounge", "office_drawer_small", 10, 20, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_round", 2, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "office_book_stack", 13, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_beige", 17, 20, 2),
-    createOfficeObject(officeId, userId, "storage", "office_bookshelf_plant", 21, 20, 2),
-    createOfficeObject(officeId, userId, "plant", "office_plant_palm", 36, 19, 2),
+    createOfficeObject(officeId, userId, "interactive", "office_editor_wardrobe", 35, 12, 2),
+    createOfficeObject(officeId, userId, "storage", "office_bookshelf_low", 4, 4, 2),
+    createOfficeObject(officeId, userId, "storage", "office_file_cabinet_gray", 8, 4, 2),
   ];
 }
 

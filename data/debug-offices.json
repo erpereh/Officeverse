@@ -17,8 +17,8 @@
       {
         "object_type": "wall",
         "asset_key": "office_kanban_board",
-        "x": 5,
-        "y": 1,
+        "x": 11,
+        "y": 2,
         "rotation": 0,
         "layer": 1,
         "metadata": {
@@ -31,27 +31,13 @@
       {
         "object_type": "wall",
         "asset_key": "office_whiteboard",
-        "x": 12,
-        "y": 1,
+        "x": 17,
+        "y": 2,
         "rotation": 0,
         "layer": 1,
         "metadata": {
           "grid_w": 3,
           "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "wall",
-        "asset_key": "building_wall_badge_blue",
-        "x": 26,
-        "y": 1,
-        "rotation": 0,
-        "layer": 1,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 1
         },
         "office_id": "00000000-0000-4000-8000-000000000101",
         "user_id": "00000000-0000-4000-8000-000000000001"
@@ -59,320 +45,12 @@
       {
         "object_type": "wall",
         "asset_key": "office_chart_board",
-        "x": 29,
-        "y": 1,
+        "x": 23,
+        "y": 2,
         "rotation": 0,
         "layer": 1,
         "metadata": {
           "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_basic",
-        "x": 17,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_black",
-        "x": 18,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_plant_square",
-        "x": 15,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_plant_small_pot",
-        "x": 23,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_bookshelf_low",
-        "x": 3,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_cabinet_glass",
-        "x": 8,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "interactive",
-        "asset_key": "office_editor_wardrobe",
-        "x": 35,
-        "y": 5,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_monitor",
-        "x": 4,
-        "y": 8,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_black",
-        "x": 5,
-        "y": 10,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_dual_terminal",
-        "x": 10,
-        "y": 8,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 4,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_teal",
-        "x": 12,
-        "y": 10,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_basic",
-        "x": 4,
-        "y": 13,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_amber",
-        "x": 5,
-        "y": 15,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_multi_monitor_station",
-        "x": 10,
-        "y": 13,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 4,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_chair_blue",
-        "x": 12,
-        "y": 15,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_plant_tall",
-        "x": 2,
-        "y": 12,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_automation_command_center",
-        "x": 25,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 4,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_server_rack",
-        "x": 31,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_server_rack",
-        "x": 34,
-        "y": 7,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_storage_shelf",
-        "x": 31,
-        "y": 12,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_retro_terminal",
-        "x": 35,
-        "y": 12,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 2,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_file_cabinet_black",
-        "x": 28,
-        "y": 13,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
           "grid_h": 2
         },
         "office_id": "00000000-0000-4000-8000-000000000101",
@@ -382,7 +60,7 @@
         "object_type": "wall",
         "asset_key": "building_power_cable",
         "x": 31,
-        "y": 4,
+        "y": 3,
         "rotation": 0,
         "layer": 1,
         "metadata": {
@@ -395,77 +73,7 @@
       {
         "object_type": "floor",
         "asset_key": "office_rug_teal",
-        "x": 22,
-        "y": 16,
-        "rotation": 0,
-        "layer": 1,
-        "metadata": {
-          "grid_w": 3,
-          "grid_h": 2
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_desk_chair_corner",
-        "x": 24,
-        "y": 16,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 4,
-          "grid_h": 3
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_waiting_chair_teal",
-        "x": 23,
-        "y": 15,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_stool_teal",
-        "x": 29,
-        "y": 15,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_armchair_beige",
-        "x": 29,
-        "y": 19,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "floor",
-        "asset_key": "office_rug_red",
-        "x": 4,
+        "x": 6,
         "y": 18,
         "rotation": 0,
         "layer": 1,
@@ -478,9 +86,275 @@
       },
       {
         "object_type": "furniture",
+        "asset_key": "office_desk_basic",
+        "x": 10,
+        "y": 16,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_chair_teal",
+        "x": 11,
+        "y": 18,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_plant_square",
+        "x": 14,
+        "y": 18,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_plant_small_pot",
+        "x": 4,
+        "y": 17,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_desk_monitor",
+        "x": 13,
+        "y": 7,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_chair_black",
+        "x": 14,
+        "y": 9,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_desk_dual_terminal",
+        "x": 19,
+        "y": 7,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 4,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_chair_teal",
+        "x": 21,
+        "y": 9,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_desk_basic",
+        "x": 25,
+        "y": 7,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_chair_blue",
+        "x": 26,
+        "y": 9,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "floor",
+        "asset_key": "office_rug_beige",
+        "x": 17,
+        "y": 11,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 4,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_plant_tall",
+        "x": 10,
+        "y": 10,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_server_rack",
+        "x": 29,
+        "y": 4,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 2,
+          "grid_h": 3
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_server_rack",
+        "x": 32,
+        "y": 4,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 2,
+          "grid_h": 3
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_automation_command_center",
+        "x": 27,
+        "y": 8,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 4,
+          "grid_h": 3
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_retro_terminal",
+        "x": 34,
+        "y": 8,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 2,
+          "grid_h": 3
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_desk_monitor",
+        "x": 30,
+        "y": 12,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_chair_black",
+        "x": 31,
+        "y": 14,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "floor",
+        "asset_key": "office_rug_red",
+        "x": 27,
+        "y": 17,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
         "asset_key": "office_sofa_teal",
-        "x": 5,
-        "y": 20,
+        "x": 27,
+        "y": 17,
         "rotation": 0,
         "layer": 2,
         "metadata": {
@@ -493,8 +367,22 @@
       {
         "object_type": "furniture",
         "asset_key": "office_drawer_small",
-        "x": 10,
-        "y": 20,
+        "x": 31,
+        "y": 18,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 1
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_armchair_beige",
+        "x": 33,
+        "y": 17,
         "rotation": 0,
         "layer": 2,
         "metadata": {
@@ -507,8 +395,8 @@
       {
         "object_type": "furniture",
         "asset_key": "office_plant_round",
-        "x": 2,
-        "y": 20,
+        "x": 35,
+        "y": 17,
         "rotation": 0,
         "layer": 2,
         "metadata": {
@@ -520,22 +408,8 @@
       },
       {
         "object_type": "furniture",
-        "asset_key": "office_book_stack",
-        "x": 13,
-        "y": 20,
-        "rotation": 0,
-        "layer": 2,
-        "metadata": {
-          "grid_w": 1,
-          "grid_h": 1
-        },
-        "office_id": "00000000-0000-4000-8000-000000000101",
-        "user_id": "00000000-0000-4000-8000-000000000001"
-      },
-      {
-        "object_type": "furniture",
-        "asset_key": "office_file_cabinet_beige",
-        "x": 17,
+        "asset_key": "office_plant_tall",
+        "x": 35,
         "y": 20,
         "rotation": 0,
         "layer": 2,
@@ -547,10 +421,10 @@
         "user_id": "00000000-0000-4000-8000-000000000001"
       },
       {
-        "object_type": "furniture",
-        "asset_key": "office_bookshelf_plant",
-        "x": 21,
-        "y": 20,
+        "object_type": "interactive",
+        "asset_key": "office_editor_wardrobe",
+        "x": 35,
+        "y": 12,
         "rotation": 0,
         "layer": 2,
         "metadata": {
@@ -562,11 +436,53 @@
       },
       {
         "object_type": "furniture",
-        "asset_key": "office_plant_palm",
-        "x": 36,
-        "y": 19,
+        "asset_key": "office_bookshelf_low",
+        "x": 4,
+        "y": 4,
         "rotation": 0,
         "layer": 2,
+        "metadata": {
+          "grid_w": 3,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "furniture",
+        "asset_key": "office_file_cabinet_gray",
+        "x": 8,
+        "y": 4,
+        "rotation": 0,
+        "layer": 2,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
+        "metadata": {
+          "grid_w": 1,
+          "grid_h": 2
+        },
+        "office_id": "00000000-0000-4000-8000-000000000101",
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      {
+        "object_type": "wall",
+        "asset_key": "building_wall_column",
+        "x": 38,
+        "y": 1,
+        "rotation": 0,
+        "layer": 1,
         "metadata": {
           "grid_w": 1,
           "grid_h": 2

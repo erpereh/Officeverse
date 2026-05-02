@@ -21,30 +21,31 @@ describe("office bootstrap", () => {
   it("creates deterministic template objects on demand", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
 
-    expect(objects).toHaveLength(40);
+    expect(objects).toHaveLength(32);
     expect(objects.map((object) => object.asset_key)).toEqual(
       expect.arrayContaining([
         "office_kanban_board",
         "office_whiteboard",
-        "building_wall_badge_blue",
         "office_chart_board",
-        "office_bookshelf_low",
-        "office_file_cabinet_black",
         "office_editor_wardrobe",
-        "office_multi_monitor_station",
-        "office_chair_teal",
+        "office_desk_monitor",
+        "office_desk_dual_terminal",
         "office_desk_basic",
         "office_chair_black",
+        "office_chair_teal",
+        "office_chair_blue",
         "office_automation_command_center",
-        "office_rug_teal",
-        "office_desk_chair_corner",
-        "office_rug_red",
-        "office_sofa_teal",
-        "office_drawer_small",
-        "office_book_stack",
-        "office_bookshelf_plant",
-        "office_plant_tall",
         "office_server_rack",
+        "office_rug_teal",
+        "office_rug_red",
+        "office_rug_beige",
+        "office_sofa_teal",
+        "office_armchair_beige",
+        "office_drawer_small",
+        "office_plant_tall",
+        "office_plant_round",
+        "office_plant_small_pot",
+        "office_plant_square",
         "building_power_cable",
       ]),
     );
@@ -61,6 +62,7 @@ describe("office bootstrap", () => {
       expect.arrayContaining([
         "office_desk_monitor",
         "office_desk_dual_terminal",
+        "office_desk_basic",
         "office_automation_command_center",
         "office_server_rack",
         "office_sofa_teal",
@@ -79,6 +81,18 @@ describe("office bootstrap", () => {
       expect(object.x + width, object.asset_key).toBeLessThanOrEqual(defaultOfficeWidth);
       expect(object.y + height, object.asset_key).toBeLessThanOrEqual(defaultOfficeHeight);
     }
+
+    expect(objects).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ asset_key: "office_desk_monitor", x: 13, y: 7 }),
+        expect.objectContaining({ asset_key: "office_desk_dual_terminal", x: 19, y: 7 }),
+        expect.objectContaining({ asset_key: "office_desk_basic", x: 25, y: 7 }),
+        expect.objectContaining({ asset_key: "office_server_rack", x: 29, y: 4 }),
+        expect.objectContaining({ asset_key: "office_server_rack", x: 32, y: 4 }),
+        expect.objectContaining({ asset_key: "office_sofa_teal", x: 27, y: 17 }),
+        expect.objectContaining({ asset_key: "office_editor_wardrobe", x: 35, y: 12 }),
+      ]),
+    );
   });
 
   it("converts grid coordinates to scaled pixel positions", () => {
@@ -100,8 +114,9 @@ describe("office bootstrap", () => {
   it("keeps the spawn point clear in the furnished office", () => {
     const objects = createDefaultOfficeObjects("office-1", "user-1");
 
+    expect(officeSpawnPoint).toEqual({ x: 8, y: 19 });
     expect(isGridBlocked(officeSpawnPoint, objects)).toBe(false);
-    expect(isGridBlocked({ x: 5, y: 8 }, objects)).toBe(true);
+    expect(isGridBlocked({ x: 13, y: 8 }, objects)).toBe(true);
     expect(isGridBlocked({ x: officeSpawnPoint.x - 1, y: officeSpawnPoint.y }, objects)).toBe(false);
     expect(isGridBlocked({ x: officeSpawnPoint.x + 1, y: officeSpawnPoint.y }, objects)).toBe(false);
     expect(isGridBlocked({ x: officeSpawnPoint.x, y: officeSpawnPoint.y - 1 }, objects)).toBe(false);

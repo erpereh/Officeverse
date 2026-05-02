@@ -149,7 +149,7 @@ export function OfficeScene({
         }
 
         create() {
-          this.cameras.main.setBackgroundColor("#182432");
+          this.cameras.main.setBackgroundColor("#211c17");
           this.cameras.main.setBounds(0, 0, worldWidth, worldHeight);
           this.registerAssetFrames();
           this.renderRoom();
@@ -223,7 +223,8 @@ export function OfficeScene({
         private renderRoom() {
           const graphics = this.add.graphics();
 
-          graphics.fillStyle(0x162233, 1);
+          graphics.setDepth(-100);
+          graphics.fillStyle(0x211c17, 1);
           graphics.fillRect(0, 0, worldWidth, worldHeight);
 
           const office = stateRef.current.office;
@@ -534,7 +535,7 @@ export function OfficeScene({
         height: initialSize.height,
         parent: containerRef.current,
         pixelArt: true,
-        backgroundColor: "#182432",
+        backgroundColor: "#211c17",
         scene: OfficePhaserScene,
         scale: {
           mode: Phaser.Scale.NONE,
