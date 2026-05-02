@@ -14,7 +14,7 @@ import {
   type EditorTool,
   moveObjectAt,
   placeObject,
-  rotateObjectAt,
+  rotateQuarterTurn,
 } from "@/lib/office-editor";
 import { createClient } from "@/lib/supabase/client";
 import type { Office, OfficeObject, OfficeState } from "@/lib/types";
@@ -38,6 +38,7 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
   const [editorOpen, setEditorOpen] = useState(false);
   const [editorTool, setEditorTool] = useState<EditorTool>("place");
   const [selectedAssetKey, setSelectedAssetKey] = useState(firstAsset);
+  const [selectedRotation, setSelectedRotation] = useState(0);
   const [moveFrom, setMoveFrom] = useState<{ x: number; y: number } | null>(null);
   const [dirty, setDirty] = useState(false);
   const sceneState = useMemo(
@@ -64,8 +65,9 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
     (point: { x: number; y: number }) => {
       setObjects((current) => {
         if (editorTool === "delete") {
-          setDirty(true);
-          return deleteObjectAt(current, point);
+          const deleted = deleteObjectAt(current, point);
+          setDirty((wasDirty) => wasDirty || deleted !== current);
+          return deleted;
         }
 
         if (editorTool === "move") {
@@ -74,25 +76,20 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
             return current;
           }
 
-          setDirty(true);
           setMoveFrom(null);
-          return moveObjectAt(current, moveFrom, point);
-        }
-
-        if (editorTool === "rotate") {
-          const rotated = rotateObjectAt(current, point);
-          setDirty(rotated !== current);
-          return rotated;
+          const moved = moveObjectAt(current, moveFrom, point);
+          setDirty((wasDirty) => wasDirty || moved !== current);
+          return moved;
         }
 
         setDirty(true);
         return placeObject(
           current,
-          createObjectFromAsset(state.office.id, state.profile.id, selectedAssetKey, point),
+          createObjectFromAsset(state.office.id, state.profile.id, selectedAssetKey, point, selectedRotation),
         );
       });
     },
-    [editorTool, moveFrom, selectedAssetKey, state.office.id, state.profile.id],
+    [editorTool, moveFrom, selectedAssetKey, selectedRotation, state.office.id, state.profile.id],
   );
 
   return (
@@ -129,6 +126,7 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
             editorMode={editorOpen}
             onGridClick={handleGridClick}
             selectedAssetKey={selectedAssetKey}
+            selectedRotation={selectedRotation}
             state={sceneState}
           />
         </section>
@@ -179,11 +177,13 @@ export function OfficeShell({ offices, state, userEmail, isDebug }: OfficeShellP
                 router.refresh();
               }}
               onSelectAsset={setSelectedAssetKey}
+              onRotateSelected={() => setSelectedRotation((rotation) => rotateQuarterTurn(rotation))}
               onSetTool={(tool) => {
                 setEditorTool(tool);
                 setMoveFrom(null);
               }}
               selectedAssetKey={selectedAssetKey}
+              selectedRotation={selectedRotation}
             />
           ) : null}
           {isDebug ? (

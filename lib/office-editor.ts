@@ -6,13 +6,14 @@ type GridPoint = {
   y: number;
 };
 
-export type EditorTool = "delete" | "move" | "place" | "rotate";
+export type EditorTool = "delete" | "move" | "place";
 
 export function createObjectFromAsset(
   officeId: string,
   userId: string,
   assetKey: string,
   point: GridPoint,
+  rotation = 0,
 ): OfficeObject {
   const asset = getAssetDefinition(assetKey);
 
@@ -27,7 +28,7 @@ export function createObjectFromAsset(
     asset_key: asset.key,
     x: point.x,
     y: point.y,
-    rotation: 0,
+    rotation: normalizeRotation(rotation),
     layer: asset.category === "floor" || asset.category === "wall" ? 1 : 2,
     metadata: {
       grid_w: asset.gridSize?.w ?? 1,
@@ -108,18 +109,8 @@ export function moveObjectAt(
   );
 }
 
-export function rotateObjectAt(objects: OfficeObject[], point: GridPoint) {
-  const index = findTopObjectIndexAt(objects, point);
-
-  if (index < 0) {
-    return objects;
-  }
-
-  return objects.map((object, objectIndex) =>
-    objectIndex === index
-      ? { ...object, rotation: normalizeRotation(object.rotation + 90) }
-      : object,
-  );
+export function rotateQuarterTurn(rotation: number | undefined) {
+  return normalizeRotation((rotation ?? 0) + 90);
 }
 
 function normalizeRotation(rotation: number) {

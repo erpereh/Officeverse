@@ -23,12 +23,14 @@ type OfficeSceneProps = {
   editorTool?: EditorTool;
   onGridClick?: (point: { x: number; y: number }) => void;
   selectedAssetKey?: string;
+  selectedRotation?: number;
   state: OfficeState;
 };
 
 type EditorSceneState = {
   enabled: boolean;
   selectedAssetKey: string;
+  selectedRotation: number;
   tool: EditorTool;
 };
 
@@ -63,6 +65,7 @@ export function OfficeScene({
   editorTool = "place",
   onGridClick,
   selectedAssetKey = "desk_basic",
+  selectedRotation = 0,
   state,
 }: OfficeSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,6 +73,7 @@ export function OfficeScene({
   const editorStateRef = useRef<EditorSceneState>({
     enabled: editorMode,
     selectedAssetKey,
+    selectedRotation,
     tool: editorTool,
   });
   const gridClickRef = useRef(onGridClick);
@@ -77,7 +81,7 @@ export function OfficeScene({
 
   stateRef.current = state;
   gridClickRef.current = onGridClick;
-  editorStateRef.current = { enabled: editorMode, selectedAssetKey, tool: editorTool };
+  editorStateRef.current = { enabled: editorMode, selectedAssetKey, selectedRotation, tool: editorTool };
 
   useEffect(() => {
     let game: {
@@ -447,8 +451,25 @@ export function OfficeScene({
             const x = Math.floor(pointer.worldX / (tileSize * scale));
             const y = Math.floor(pointer.worldY / (tileSize * scale));
             const office = stateRef.current.office;
+            const asset = getAssetDefinition(editorStateRef.current.selectedAssetKey);
+            const width = asset?.gridSize?.w ?? 1;
+            const height = asset?.gridSize?.h ?? 1;
 
-            if (x >= 1 && y >= 1 && x < office.width - 1 && y < office.height - 1) {
+            if (
+              editorStateRef.current.tool === "place" &&
+              this.isEditableCell(x, y, width, height)
+            ) {
+              gridClickRef.current?.({ x, y });
+              return;
+            }
+
+            if (
+              editorStateRef.current.tool !== "place" &&
+              x >= 0 &&
+              y >= 0 &&
+              x < office.width &&
+              y < office.height
+            ) {
               gridClickRef.current?.({ x, y });
             }
           });
@@ -499,7 +520,7 @@ export function OfficeScene({
 
           this.ghost = this.add
             .rectangle(0, 0, tileSize * scale, tileSize * scale)
-            .setOrigin(0)
+            .setOrigin(0.5)
             .setStrokeStyle(2, 0x14b8a6, 0.95)
             .setFillStyle(0x14b8a6, 0.18)
             .setDepth(9995)
@@ -517,8 +538,9 @@ export function OfficeScene({
           const valid = this.isEditableCell(x, y, asset?.gridSize?.w ?? 1, asset?.gridSize?.h ?? 1);
 
           this.ghost
-            ?.setPosition(pixel.x, pixel.y)
+            ?.setPosition(pixel.x + width / 2, pixel.y + height / 2)
             .setSize(width, height)
+            .setAngle(editorStateRef.current.selectedRotation)
             .setFillStyle(valid ? 0x14b8a6 : 0xef4444, 0.18)
             .setStrokeStyle(2, valid ? 0x14b8a6 : 0xef4444, 0.95)
             .setVisible(true);
@@ -584,8 +606,13 @@ export function OfficeScene({
   }, [state.office.height, state.office.id, state.office.width, state.profile.avatar_id]);
 
   useEffect(() => {
-    controllerRef.current?.setEditorState({ enabled: editorMode, selectedAssetKey, tool: editorTool });
-  }, [editorMode, editorTool, selectedAssetKey]);
+    controllerRef.current?.setEditorState({
+      enabled: editorMode,
+      selectedAssetKey,
+      selectedRotation,
+      tool: editorTool,
+    });
+  }, [editorMode, editorTool, selectedAssetKey, selectedRotation]);
 
   useEffect(() => {
     controllerRef.current?.setObjects(state.objects);

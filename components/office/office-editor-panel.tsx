@@ -25,10 +25,12 @@ type OfficeEditorPanelProps = {
   objects: OfficeObject[];
   offices: Office[];
   onClose: () => void;
+  onRotateSelected: () => void;
   onSaved: () => void;
   onSelectAsset: (assetKey: string) => void;
   onSetTool: (tool: EditorTool) => void;
   selectedAssetKey: string;
+  selectedRotation: number;
 };
 
 const placeableAssets = assetDefinitions.filter(
@@ -50,10 +52,12 @@ export function OfficeEditorPanel({
   objects,
   offices,
   onClose,
+  onRotateSelected,
   onSaved,
   onSelectAsset,
   onSetTool,
   selectedAssetKey,
+  selectedRotation,
 }: OfficeEditorPanelProps) {
   const [tab, setTab] = useState<"assets" | "offices" | "tools">("assets");
   const [category, setCategory] = useState("all");
@@ -185,7 +189,7 @@ export function OfficeEditorPanel({
               <p className="text-[11px] font-black uppercase text-teal-700">Seleccionado</p>
               <div className="mt-2 flex items-center gap-3">
                 <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-md border-2 border-stone-900 bg-[#fff8df]">
-                  <AssetPreview asset={selectedAsset} maxHeight={72} maxWidth={72} />
+                  <AssetPreview asset={selectedAsset} maxHeight={72} maxWidth={72} rotation={selectedRotation} />
                 </div>
                 <div className="min-w-0">
                   <p className="break-words text-sm font-black leading-4">{selectedAsset.name}</p>
@@ -197,18 +201,29 @@ export function OfficeEditorPanel({
               </div>
             </div>
           ) : null}
-          <select
-            aria-label="Filtrar objetos"
-            className="h-10 w-full rounded-md border-2 border-stone-950 bg-[#fff8df] px-2 text-sm font-bold text-stone-950"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-          >
-            <option value="all">Todas</option>
-            <option value="furniture">Muebles</option>
-            <option value="wall">Pared</option>
-            <option value="floor">Suelo/deco</option>
-            <option value="interactive">Interactivos</option>
-          </select>
+          <div className="flex gap-2">
+            <select
+              aria-label="Filtrar objetos"
+              className="h-10 min-w-0 flex-1 rounded-md border-2 border-stone-950 bg-[#fff8df] px-2 text-sm font-bold text-stone-950"
+              value={category}
+              onChange={(event) => setCategory(event.target.value)}
+            >
+              <option value="all">Todas</option>
+              <option value="furniture">Muebles</option>
+              <option value="wall">Pared</option>
+              <option value="floor">Suelo/deco</option>
+              <option value="interactive">Interactivos</option>
+            </select>
+            <button
+              aria-label="Rotar objeto seleccionado"
+              className="inline-flex size-10 shrink-0 items-center justify-center rounded-md border-2 border-stone-950 bg-[#f8c85f] text-stone-950 shadow-[2px_2px_0_#111827] hover:translate-x-px hover:translate-y-px hover:shadow-none"
+              title={`Rotar ${selectedRotation} grados`}
+              type="button"
+              onClick={onRotateSelected}
+            >
+              <RotateCw className="size-4" aria-hidden="true" />
+            </button>
+          </div>
           <div className="mt-3 grid max-h-72 grid-cols-2 gap-2 overflow-auto pr-1">
             {filteredAssets.map((asset) => (
               <button
@@ -242,7 +257,6 @@ export function OfficeEditorPanel({
         <div className="mt-3 space-y-2">
           <ToolButton active={editorTool === "place"} icon={<Paintbrush />} label="Colocar" onClick={() => onSetTool("place")} />
           <ToolButton active={editorTool === "move"} icon={<Move />} label="Mover" onClick={() => onSetTool("move")} />
-          <ToolButton active={editorTool === "rotate"} icon={<RotateCw />} label="Rotar" onClick={() => onSetTool("rotate")} />
           <ToolButton active={editorTool === "delete"} icon={<Eraser />} label="Borrar" onClick={() => onSetTool("delete")} />
           <ToolButton active={false} icon={<Wand2 />} label="Cargar plantilla" onClick={loadTemplate} />
           <button
@@ -308,10 +322,12 @@ function AssetPreview({
   asset,
   maxHeight,
   maxWidth,
+  rotation = 0,
 }: {
   asset: (typeof assetDefinitions)[number];
   maxHeight: number;
   maxWidth: number;
+  rotation?: number;
 }) {
   if (!asset.frame) {
     return null;
@@ -332,6 +348,7 @@ function AssetPreview({
           ? `${sourceSize.width * fit.scale}px ${sourceSize.height * fit.scale}px`
           : undefined,
         height: fit.height,
+        transform: `rotate(${rotation}deg)`,
         width: fit.width,
       }}
     />

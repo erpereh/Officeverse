@@ -6,7 +6,7 @@ import {
   deleteObjectAt,
   moveObjectAt,
   placeObject,
-  rotateObjectAt,
+  rotateQuarterTurn,
 } from "@/lib/office-editor";
 import {
   createEmptyOfficeObjects,
@@ -132,11 +132,12 @@ describe("office bootstrap", () => {
   });
 
   it("places, moves, and deletes editor objects", () => {
-    const object = createObjectFromAsset("office-1", "user-1", "office_desk_basic", { x: 4, y: 5 });
+    const object = createObjectFromAsset("office-1", "user-1", "office_desk_basic", { x: 4, y: 5 }, 90);
     const placed = placeObject([], object);
 
     expect(placed).toHaveLength(1);
     expect(placed[0].asset_key).toBe("office_desk_basic");
+    expect(placed[0].rotation).toBe(90);
 
     const moved = moveObjectAt(placed, { x: 4, y: 5 }, { x: 8, y: 9 });
 
@@ -144,19 +145,20 @@ describe("office bootstrap", () => {
     expect(deleteObjectAt(moved, { x: 8, y: 9 })).toEqual([]);
   });
 
-  it("rotates editor objects clockwise in quarter turns", () => {
-    const object = createObjectFromAsset("office-1", "user-1", "office_desk_basic", { x: 4, y: 5 });
-    const placed = placeObject([], object);
+  it("cycles placement rotation clockwise in quarter turns", () => {
+    expect(rotateQuarterTurn(0)).toBe(90);
+    expect(rotateQuarterTurn(90)).toBe(180);
+    expect(rotateQuarterTurn(180)).toBe(270);
+    expect(rotateQuarterTurn(270)).toBe(0);
+    expect(rotateQuarterTurn(undefined)).toBe(90);
+  });
 
-    const rotated90 = rotateObjectAt(placed, { x: 4, y: 5 });
-    const rotated180 = rotateObjectAt(rotated90, { x: 4, y: 5 });
-    const rotated270 = rotateObjectAt(rotated180, { x: 4, y: 5 });
-    const rotated0 = rotateObjectAt(rotated270, { x: 4, y: 5 });
+  it("deletes wall objects placed on map borders and leaves empty cells unchanged", () => {
+    const arrow = createObjectFromAsset("office-1", "user-1", "building_exit_arrow_sign", { x: 0, y: 14 });
+    const chair = createObjectFromAsset("office-1", "user-1", "office_chair_black", { x: 2, y: 14 });
+    const placed = placeObject([arrow], chair);
 
-    expect(rotated90[0].rotation).toBe(90);
-    expect(rotated180[0].rotation).toBe(180);
-    expect(rotated270[0].rotation).toBe(270);
-    expect(rotated0[0].rotation).toBe(0);
-    expect(rotateObjectAt(placed, { x: 20, y: 20 })).toBe(placed);
+    expect(deleteObjectAt(placed, { x: 1, y: 14 })).toEqual([chair]);
+    expect(deleteObjectAt(placed, { x: 30, y: 20 })).toBe(placed);
   });
 });
